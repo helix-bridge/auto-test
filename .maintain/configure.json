@@ -1,0 +1,157 @@
+{
+    "indexer": "https://apollo-test.helixbridge.app/graphql",
+    "chains": [
+        {
+            "name": "arbitrum-goerli",
+            "rpc": "https://goerli-rollup.arbitrum.io/rpc",
+            "native": "ETH"
+        },
+        {
+            "name": "zksync-goerli",
+            "rpc": "https://zksync2-testnet.zksync.dev",
+            "native": "ETH"
+        },
+        {
+            "name": "goerli",
+            "rpc": "https://rpc.ankr.com/eth_goerli",
+            "native": "ETH"
+        },
+        {
+            "name": "linea-goerli",
+            "rpc": "https://rpc.goerli.linea.build",
+            "native": "ETH"
+        }
+    ],
+    "bridges": [
+        {
+            "fromChain": "arbitrum-goerli",
+            "toChain": "goerli",
+            "sourceBridgeAddress": "0x7B8413FA1c1033844ac813A2E6475E15FB0fb3BA",
+            "targetBridgeAddress": "0x3B1A953bFa72Af4ae3494b08e453BFF30a06A550",
+            "encryptedPrivateKey": "...",
+            "direction": "opposite",
+            "providers": [
+                {
+                    "fromAddress": "0xFBAD806Bdf9cEC2943be281FB355Da05068DE925",
+                    "toAddress": "0x1836BAFa3016Dd5Ce543D0F7199cB858ec69F41E",
+                    "srcDecimals": 18
+                },
+                {
+                    "fromAddress": "0xEA70a40Df1432A1b38b916A51Fb81A4cc805a963",
+                    "toAddress": "0xd35CCeEAD182dcee0F148EbaC9447DA2c4D449c4",
+                    "srcDecimals": 6
+                }
+            ]
+        },
+        {
+            "fromChain": "goerli",
+            "toChain": "arbitrum-goerli",
+            "sourceBridgeAddress": "0xcD86cf37a4Dc6f78B4899232E7dD1b5c8130EFDA",
+            "targetBridgeAddress": "0x4112c9d474951246fBC2B4D868D247e714698aE1",
+            "encryptedPrivateKey": "...",
+            "direction": "default",
+            "providers": [
+                {
+                    "fromAddress": "0x1836BAFa3016Dd5Ce543D0F7199cB858ec69F41E",
+                    "toAddress": "0xFBAD806Bdf9cEC2943be281FB355Da05068DE925",
+                    "srcDecimals": 18
+                },
+                {
+                    "fromAddress": "0xd35CCeEAD182dcee0F148EbaC9447DA2c4D449c4",
+                    "toAddress": "0xEA70a40Df1432A1b38b916A51Fb81A4cc805a963",
+                    "srcDecimals": 6
+                }
+            ]
+        },
+        {
+            "fromChain": "goerli",
+            "toChain": "zksync-goerli",
+            "sourceBridgeAddress": "0xc05ca63DAB6b48bcd82320d29Ad44BD6A3C21160",
+            "targetBridgeAddress": "0xe0be4a2b4B0846fB088F720D3D0DFE725b9c91ee",
+            "encryptedPrivateKey": "...",
+            "direction": "default",
+            "providers": [
+                {
+                    "fromAddress": "0x0000000000000000000000000000000000000000",
+                    "toAddress": "0x0000000000000000000000000000000000000000",
+                    "srcDecimals": 18
+                },
+                {
+                    "fromAddress": "0x1836BAFa3016Dd5Ce543D0F7199cB858ec69F41E",
+                    "toAddress": "0x61C31A1fA4a8D765e63D4285f368aA2f4d912DbB",
+                    "srcDecimals": 18
+                },
+                {
+                    "fromAddress": "0xd35CCeEAD182dcee0F148EbaC9447DA2c4D449c4",
+                    "toAddress": "0x0faF6df7054946141266420b43783387A78d82A9",
+                    "srcDecimals": 6
+                }
+            ]
+        },
+        {
+            "fromChain": "zksync-goerli",
+            "toChain": "goerli",
+            "sourceBridgeAddress": "0x9422E7883d1F9Dd2E0f5926D585115542D6C71dA",
+            "targetBridgeAddress": "0x6E7b0Af10aB840a47c47AeC97107487D2a17Eb2F",
+            "encryptedPrivateKey": "...",
+            "direction": "opposite",
+            "providers": [
+                {
+                    "fromAddress": "0x0000000000000000000000000000000000000000",
+                    "toAddress": "0x0000000000000000000000000000000000000000",
+                    "srcDecimals": 18
+                },
+                {
+                    "fromAddress": "0x61C31A1fA4a8D765e63D4285f368aA2f4d912DbB",
+                    "toAddress": "0x1836BAFa3016Dd5Ce543D0F7199cB858ec69F41E",
+                    "srcDecimals": 18
+                },
+                {
+                    "fromAddress": "0x0faF6df7054946141266420b43783387A78d82A9",
+                    "toAddress": "0xd35CCeEAD182dcee0F148EbaC9447DA2c4D449c4",
+                    "srcDecimals": 6
+                }
+            ]
+        },
+        {
+            "fromChain": "goerli",
+            "toChain": "linea-goerli",
+            "sourceBridgeAddress": "0x5A351EA4F4128F58EA13DDa52E3d1842c0b3B690",
+            "targetBridgeAddress": "0xeA5f0a09A8723444965FDd6f76523C338faB00f7",
+            "encryptedPrivateKey": "...",
+            "direction": "default",
+            "providers": [
+                {
+                    "fromAddress": "0x0000000000000000000000000000000000000000",
+                    "toAddress": "0x0000000000000000000000000000000000000000",
+                    "srcDecimals": 18
+                },
+                {
+                    "fromAddress": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
+                    "toAddress": "0xB4257F31750961C8e536f5cfCBb3079437700416",
+                    "srcDecimals": 6
+                }
+            ]
+        },
+        {
+            "fromChain": "linea-goerli",
+            "toChain": "goerli",
+            "sourceBridgeAddress": "0x9C80EdD342b5D179c3a87946fC1F0963BfcaAa09",
+            "targetBridgeAddress": "0x91bdd735Dc214876605C18A57C7841CFF7eE959a",
+            "encryptedPrivateKey": "...",
+            "direction": "opposite",
+            "providers": [
+                {
+                    "fromAddress": "0x0000000000000000000000000000000000000000",
+                    "toAddress": "0x0000000000000000000000000000000000000000",
+                    "srcDecimals": 18
+                },
+                {
+                    "fromAddress": "0xB4257F31750961C8e536f5cfCBb3079437700416",
+                    "toAddress": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
+                    "srcDecimals": 6
+                }
+            ]
+        }
+    ]
+}
