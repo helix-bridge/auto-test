@@ -80,7 +80,7 @@ export class TesterService implements OnModuleInit {
               return;
           }
           chainInfo.isProcessing = true;
-          item.randomExecTimes = Math.floor(Math.random() * 1200);
+          item.randomExecTimes = Math.floor(Math.random() * 2400);
           this.logger.log(`[${chainInfo.chainName}->${item.toChain}]schedule send tx, next time ${item.randomExecTimes}`);
           try {
             await this.send(item);
