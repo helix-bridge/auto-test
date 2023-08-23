@@ -67,21 +67,27 @@ export class TesterService implements OnModuleInit {
     this.logger.log("autotest service start");
     this.initConfigure();
     this.lnBridges.forEach((item, index) => {
+      const fromChainName = item.fromBridge.chainInfo.chainName;
       this.taskService.addScheduleTask(
-        `${item.fromBridge.chainInfo.chainName}-${item.toChain}-lnbridge-autotest`,
+        `${fromChainName}-${item.toChain}-lnbridge-autotest`,
         this.scheduleInterval,
         async () => {
-          const chainInfo = this.chainInfos.get(item.fromBridge.chainInfo.chainName);
+          const chainInfo = this.chainInfos.get(fromChainName);
           if (chainInfo.isProcessing) {
+            return;
+          }
+          if (chainInfo.waitingPendingTimes > 0) {
+            chainInfo.waitingPendingTimes -= 1;
             return;
           }
           if (item.randomExecTimes > 0) {
               item.randomExecTimes -= 1;
               return;
           }
+          chainInfo.waitingPendingTimes = 100;
           chainInfo.isProcessing = true;
           item.randomExecTimes = Math.floor(Math.random() * 2400);
-          this.logger.log(`[${chainInfo.chainName}->${item.toChain}]schedule send tx, next time ${item.randomExecTimes}`);
+          this.logger.log(`[${fromChainName}->${item.toChain}]schedule send tx, next time ${item.randomExecTimes}`);
           try {
             await this.send(item);
           } catch (err) {
@@ -107,6 +113,7 @@ export class TesterService implements OnModuleInit {
             provider: new EthereumProvider(config.rpc),
             fixedGasPrice: config.fixedGasPrice,
             isProcessing: false,
+            waitingPendingTimes: 0,
           },
         ];
       })
