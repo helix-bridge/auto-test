@@ -34,12 +34,14 @@
                 {
                     "fromAddress": "0xFBAD806Bdf9cEC2943be281FB355Da05068DE925",
                     "toAddress": "0x1836BAFa3016Dd5Ce543D0F7199cB858ec69F41E",
-                    "srcDecimals": 18
+                    "srcDecimals": 18,
+                    "feeLimit": 2000
                 },
                 {
                     "fromAddress": "0xEA70a40Df1432A1b38b916A51Fb81A4cc805a963",
                     "toAddress": "0xd35CCeEAD182dcee0F148EbaC9447DA2c4D449c4",
-                    "srcDecimals": 6
+                    "srcDecimals": 6,
+                    "feeLimit": 100
                 }
             ]
         },
@@ -54,12 +56,14 @@
                 {
                     "fromAddress": "0x1836BAFa3016Dd5Ce543D0F7199cB858ec69F41E",
                     "toAddress": "0xFBAD806Bdf9cEC2943be281FB355Da05068DE925",
-                    "srcDecimals": 18
+                    "srcDecimals": 18,
+                    "feeLimit": 2000
                 },
                 {
                     "fromAddress": "0xd35CCeEAD182dcee0F148EbaC9447DA2c4D449c4",
                     "toAddress": "0xEA70a40Df1432A1b38b916A51Fb81A4cc805a963",
-                    "srcDecimals": 6
+                    "srcDecimals": 6,
+                    "feeLimit": 100
                 }
             ]
         },
@@ -74,17 +78,20 @@
                 {
                     "fromAddress": "0x0000000000000000000000000000000000000000",
                     "toAddress": "0x0000000000000000000000000000000000000000",
-                    "srcDecimals": 18
+                    "srcDecimals": 18,
+                    "feeLimit": 0.001
                 },
                 {
                     "fromAddress": "0x1836BAFa3016Dd5Ce543D0F7199cB858ec69F41E",
                     "toAddress": "0x61C31A1fA4a8D765e63D4285f368aA2f4d912DbB",
-                    "srcDecimals": 18
+                    "srcDecimals": 18,
+                    "feeLimit": 2000
                 },
                 {
                     "fromAddress": "0xd35CCeEAD182dcee0F148EbaC9447DA2c4D449c4",
                     "toAddress": "0x0faF6df7054946141266420b43783387A78d82A9",
-                    "srcDecimals": 6
+                    "srcDecimals": 6,
+                    "feeLimit": 100
                 }
             ]
         },
@@ -99,17 +106,20 @@
                 {
                     "fromAddress": "0x0000000000000000000000000000000000000000",
                     "toAddress": "0x0000000000000000000000000000000000000000",
-                    "srcDecimals": 18
+                    "srcDecimals": 18,
+                    "feeLimit": 0.001
                 },
                 {
                     "fromAddress": "0x61C31A1fA4a8D765e63D4285f368aA2f4d912DbB",
                     "toAddress": "0x1836BAFa3016Dd5Ce543D0F7199cB858ec69F41E",
-                    "srcDecimals": 18
+                    "srcDecimals": 18,
+                    "feeLimit": 2000
                 },
                 {
                     "fromAddress": "0x0faF6df7054946141266420b43783387A78d82A9",
                     "toAddress": "0xd35CCeEAD182dcee0F148EbaC9447DA2c4D449c4",
-                    "srcDecimals": 6
+                    "srcDecimals": 6,
+                    "feeLimit": 100
                 }
             ]
         },
@@ -124,12 +134,14 @@
                 {
                     "fromAddress": "0x0000000000000000000000000000000000000000",
                     "toAddress": "0x0000000000000000000000000000000000000000",
-                    "srcDecimals": 18
+                    "srcDecimals": 18,
+                    "feeLimit": 0.001
                 },
                 {
                     "fromAddress": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
                     "toAddress": "0xB4257F31750961C8e536f5cfCBb3079437700416",
-                    "srcDecimals": 6
+                    "srcDecimals": 6,
+                    "feeLimit": 100
                 }
             ]
         },
@@ -144,12 +156,14 @@
                 {
                     "fromAddress": "0x0000000000000000000000000000000000000000",
                     "toAddress": "0x0000000000000000000000000000000000000000",
-                    "srcDecimals": 18
+                    "srcDecimals": 18,
+                    "feeLimit": 0.001
                 },
                 {
                     "fromAddress": "0xB4257F31750961C8e536f5cfCBb3079437700416",
                     "toAddress": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
-                    "srcDecimals": 6
+                    "srcDecimals": 6,
+                    "feeLimit": 100
                 }
             ]
         }

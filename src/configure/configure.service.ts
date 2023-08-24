@@ -12,6 +12,7 @@ export interface ProviderInfo {
   fromAddress: string;
   toAddress: string;
   srcDecimals: number;
+  feeLimit: number;
 }
 
 export interface BridgeConfigInfo {

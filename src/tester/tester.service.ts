@@ -37,6 +37,7 @@ export class LnProviderInfo {
   fromAddress: string;
   toAddress: string;
   srcDecimals: number;
+  feeLimit: number;
 }
 
 export class LnBridge {
@@ -149,7 +150,8 @@ export class TesterService implements OnModuleInit {
             return {
                 fromAddress: lnProviderConfig.fromAddress,
                 toAddress: lnProviderConfig.toAddress,
-                srcDecimals: lnProviderConfig.srcDecimals
+                srcDecimals: lnProviderConfig.srcDecimals,
+                feeLimit: lnProviderConfig.feeLimit
             };
           });
 
@@ -216,6 +218,12 @@ export class TesterService implements OnModuleInit {
             depositedMargin: relayerInfo.margin,
             totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).add(BigNumber.from((relayerInfo.baseFee))),
         } as OppositeSnapshot;
+
+
+        if (snapshot.totalFee > new Any(lnProvider.feeLimit, lnProvider.srcDecimals).Number) {
+            this.logger.log(`fee is too big ${snapshot.totalFee}, token ${relayerInfo.sendToken}`);
+            return;
+        }
 
         if (lnProvider.fromAddress === zeroAddress) {
             value = value.add(snapshot.totalFee);
