@@ -85,9 +85,9 @@ export class EthereumProvider {
 
   gasPriceCompare(gasPrice: GasPrice, limit: GWei): boolean {
       if (gasPrice.isEip1559) {
-          return gasPrice.eip1559fee.maxFeePerGas > limit.Number;
+          return gasPrice.eip1559fee.maxFeePerGas.gt(limit.Number);
       } else {
-          return gasPrice.fee.gasPrice > limit.Number;
+          return gasPrice.fee.gasPrice.gt(limit.Number);
       }
   }
 
