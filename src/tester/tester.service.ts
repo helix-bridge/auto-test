@@ -209,14 +209,14 @@ export class TesterService implements OnModuleInit {
             provider: relayerInfo.relayer,
             sourceToken: relayerInfo.sendToken,
             transferId: relayerInfo.lastTransferId,
-            totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).add(BigNumber.from((relayerInfo.baseFee))),
+            totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(BigNumber.from((relayerInfo.baseFee))),
             withdrawNonce: relayerInfo.withdrawNonce
         } as DefaultSnapshot : {
             provider: relayerInfo.relayer,
             sourceToken: relayerInfo.sendToken,
             transferId: relayerInfo.lastTransferId,
             depositedMargin: relayerInfo.margin,
-            totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).add(BigNumber.from((relayerInfo.baseFee))),
+            totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(BigNumber.from((relayerInfo.baseFee))),
         } as OppositeSnapshot;
 
 
