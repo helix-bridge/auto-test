@@ -221,7 +221,7 @@ export class TesterService implements OnModuleInit {
 
 
         const feeLimit = new Any(lnProvider.feeLimit, lnProvider.srcDecimals).Number;
-        if (snapshot.totalFee > feeLimit) {
+        if (snapshot.totalFee.gt(feeLimit)) {
             this.logger.log(`fee is too big ${snapshot.totalFee} > ${feeLimit}, token ${relayerInfo.sendToken}`);
             return;
         }
