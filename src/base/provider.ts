@@ -83,6 +83,14 @@ export class EthereumProvider {
     }
   }
 
+  gasPriceCompare(gasPrice: GasPrice, limit: GWei): boolean {
+      if (gasPrice.isEip1559) {
+          return gasPrice.eip1559fee.maxFeePerGas > limit.Number;
+      } else {
+          return gasPrice.fee.gasPrice > limit.Number;
+      }
+  }
+
   async checkPendingTransaction(hash: string): Promise<TransactionInfo> | null {
     const transaction = await this.provider.getTransaction(hash);
     if (!transaction) {

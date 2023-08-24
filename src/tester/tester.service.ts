@@ -221,6 +221,9 @@ export class TesterService implements OnModuleInit {
             value = value.add(snapshot.totalFee);
         }
         let gasPrice = await fromChainInfo.provider.feeData(1);
+        if (fromChainInfo.provider.gasPriceCompare(gasPrice, new GWei(10))) {
+            return;
+        }
         await fromBridgeContract.transferAndLockMargin(
             snapshot,
             amount,
