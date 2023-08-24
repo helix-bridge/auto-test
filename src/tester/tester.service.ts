@@ -220,8 +220,9 @@ export class TesterService implements OnModuleInit {
         } as OppositeSnapshot;
 
 
-        if (snapshot.totalFee > new Any(lnProvider.feeLimit, lnProvider.srcDecimals).Number) {
-            this.logger.log(`fee is too big ${snapshot.totalFee}, token ${relayerInfo.sendToken}`);
+        const feeLimit = new Any(lnProvider.feeLimit, lnProvider.srcDecimals).Number;
+        if (snapshot.totalFee > feeLimit) {
+            this.logger.log(`fee is too big ${snapshot.totalFee} > ${feeLimit}, token ${relayerInfo.sendToken}`);
             return;
         }
 
@@ -230,8 +231,10 @@ export class TesterService implements OnModuleInit {
         }
         let gasPrice = await fromChainInfo.provider.feeData(1);
         if (fromChainInfo.provider.gasPriceCompare(gasPrice, new GWei(10))) {
+            this.logger.log(`gas price too large ${gasPrice}`);
             return;
         }
+        this.logger.log("all request checked, start to send test transaction");
         await fromBridgeContract.transferAndLockMargin(
             snapshot,
             amount,
