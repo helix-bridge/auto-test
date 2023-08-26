@@ -178,6 +178,7 @@
                 {
                     "fromAddress": "0xB4257F31750961C8e536f5cfCBb3079437700416",
                     "toAddress": "0xEA70a40Df1432A1b38b916A51Fb81A4cc805a963",
+                    "srcDecimals": 6,
                     "feeLimit": 100
                 }
             ]
@@ -193,6 +194,7 @@
                 {
                     "fromAddress": "0xEA70a40Df1432A1b38b916A51Fb81A4cc805a963",
                     "toAddress": "0xB4257F31750961C8e536f5cfCBb3079437700416",
+                    "srcDecimals": 6,
                     "feeLimit": 100
                 }
             ]
@@ -208,6 +210,7 @@
                 {
                     "fromAddress": "0xEA70a40Df1432A1b38b916A51Fb81A4cc805a963",
                     "toAddress": "0x0faF6df7054946141266420b43783387A78d82A9",
+                    "srcDecimals": 6,
                     "feeLimit": 100
                 }
             ]
@@ -223,6 +226,7 @@
                 {
                     "fromAddress": "0x0faF6df7054946141266420b43783387A78d82A9",
                     "toAddress": "0xEA70a40Df1432A1b38b916A51Fb81A4cc805a963",
+                    "srcDecimals": 6,
                     "feeLimit": 100
                 }
             ]
@@ -238,6 +242,7 @@
                 {
                     "fromAddress": "0x0faF6df7054946141266420b43783387A78d82A9",
                     "toAddress": "0xB4257F31750961C8e536f5cfCBb3079437700416",
+                    "srcDecimals": 6,
                     "feeLimit": 100
                 }
             ]
@@ -253,6 +258,7 @@
                 {
                     "fromAddress": "0xB4257F31750961C8e536f5cfCBb3079437700416",
                     "toAddress": "0x0faF6df7054946141266420b43783387A78d82A9",
+                    "srcDecimals": 6,
                     "feeLimit": 100
                 }
             ]
