@@ -79,7 +79,7 @@
                     "fromAddress": "0x0000000000000000000000000000000000000000",
                     "toAddress": "0x0000000000000000000000000000000000000000",
                     "srcDecimals": 18,
-                    "feeLimit": 0.001
+                    "feeLimit": 0.002
                 },
                 {
                     "fromAddress": "0x1836BAFa3016Dd5Ce543D0F7199cB858ec69F41E",
@@ -107,7 +107,7 @@
                     "fromAddress": "0x0000000000000000000000000000000000000000",
                     "toAddress": "0x0000000000000000000000000000000000000000",
                     "srcDecimals": 18,
-                    "feeLimit": 0.001
+                    "feeLimit": 0.002
                 },
                 {
                     "fromAddress": "0x61C31A1fA4a8D765e63D4285f368aA2f4d912DbB",
@@ -135,7 +135,7 @@
                     "fromAddress": "0x0000000000000000000000000000000000000000",
                     "toAddress": "0x0000000000000000000000000000000000000000",
                     "srcDecimals": 18,
-                    "feeLimit": 0.001
+                    "feeLimit": 0.002
                 },
                 {
                     "fromAddress": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
@@ -157,7 +157,7 @@
                     "fromAddress": "0x0000000000000000000000000000000000000000",
                     "toAddress": "0x0000000000000000000000000000000000000000",
                     "srcDecimals": 18,
-                    "feeLimit": 0.001
+                    "feeLimit": 0.002
                 },
                 {
                     "fromAddress": "0xB4257F31750961C8e536f5cfCBb3079437700416",
