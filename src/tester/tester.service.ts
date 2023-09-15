@@ -36,8 +36,8 @@ export class BridgeConnectInfo {
 export class LnProviderInfo {
   fromAddress: string;
   toAddress: string;
-  srcDecimals: number;
   feeLimit: number;
+  fromToken: Erc20Contract;
 }
 
 export class LnBridge {
@@ -152,8 +152,8 @@ export class TesterService implements OnModuleInit {
             return {
                 fromAddress: lnProviderConfig.fromAddress,
                 toAddress: lnProviderConfig.toAddress,
-                srcDecimals: lnProviderConfig.srcDecimals,
-                feeLimit: lnProviderConfig.feeLimit
+                feeLimit: lnProviderConfig.feeLimit,
+                fromToken: new Erc20Contract(lnProviderConfig.fromAddress, fromWallet.wallet),
             };
           });
 
@@ -179,7 +179,8 @@ export class TesterService implements OnModuleInit {
     const randomIndex = Math.floor(Math.random() * (bridge.lnProviders.length - 1) + 0.5);
     const lnProvider = bridge.lnProviders[randomIndex];
     const randomAmount = Math.floor(Math.random() * 1000);
-    let amount = new Any(randomAmount, lnProvider.srcDecimals).Number;
+    const srcDecimals = await lnProvider.fromToken.decimals();
+    let amount = new Any(randomAmount, srcDecimals).Number;
     let value = BigNumber.from(0);
     if (lnProvider.fromAddress === zeroAddress) {
         amount = amount.div(1000000);
@@ -192,7 +193,7 @@ export class TesterService implements OnModuleInit {
             bridge: \"lnbridgev20-${bridge.direction}\",
             token: \"${lnProvider.fromAddress.toLowerCase()}\",
             amount: \"${amount}\",
-            decimals: ${lnProvider.srcDecimals},
+            decimals: ${srcDecimals},
         ) {baseFee, lastTransferId, liquidityFeeRate, margin, relayer, sendToken, withdrawNonce}}`;
 
         const sortedRelayers = await axios
@@ -227,7 +228,7 @@ export class TesterService implements OnModuleInit {
         } as OppositeSnapshot;
 
 
-        const feeLimit = new Any(lnProvider.feeLimit, lnProvider.srcDecimals).Number;
+        const feeLimit = new Any(lnProvider.feeLimit, srcDecimals).Number;
         if (snapshot.totalFee.gt(feeLimit)) {
             this.logger.log(`fee is too big ${snapshot.totalFee} > ${feeLimit}, token ${relayerInfo.sendToken}`);
             return;
