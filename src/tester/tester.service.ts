@@ -213,7 +213,7 @@ export class TesterService implements OnModuleInit {
             remoteChainId: bridge.toChainId,
             provider: relayerInfo.relayer,
             sourceToken: relayerInfo.sendToken,
-            targetToken: relayerInfo.targetToken,
+            targetToken: lnProvider.toAddress,
             transferId: relayerInfo.lastTransferId,
             totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(BigNumber.from((relayerInfo.baseFee))),
             withdrawNonce: relayerInfo.withdrawNonce
@@ -221,7 +221,7 @@ export class TesterService implements OnModuleInit {
             remoteChainId: bridge.toChainId,
             provider: relayerInfo.relayer,
             sourceToken: relayerInfo.sendToken,
-            targetToken: relayerInfo.targetToken,
+            targetToken: lnProvider.toAddress,
             transferId: relayerInfo.lastTransferId,
             depositedMargin: relayerInfo.margin,
             totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(BigNumber.from((relayerInfo.baseFee))),
