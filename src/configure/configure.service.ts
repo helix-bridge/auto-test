@@ -4,6 +4,7 @@ import * as fs from "fs";
 
 export interface ChainConfigInfo {
   name: string;
+  chainId: number;
   rpc: string;
   fixedGasPrice: number;
 }

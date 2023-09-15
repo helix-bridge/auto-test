@@ -3,7 +3,7 @@ import { TasksService } from "../tasks/tasks.service";
 import axios from "axios";
 import {
   Erc20Contract,
-  LnBridgeSourceContract,
+  LnBridgeContract,
   DefaultSnapshot,
   OppositeSnapshot,
   zeroAddress,
@@ -30,7 +30,7 @@ export class ChainInfo {
 
 export class BridgeConnectInfo {
   chainInfo: ChainInfo;
-  bridge: LnBridgeSourceContract;
+  bridge: LnBridgeContract;
 }
 
 export class LnProviderInfo {
@@ -44,6 +44,7 @@ export class LnBridge {
   isProcessing: boolean;
   fromBridge: BridgeConnectInfo;
   toChain: string;
+  toChainId: number;
   direction: string;
   lnProviders: LnProviderInfo[];
   walletAddress: string;
@@ -110,6 +111,7 @@ export class TesterService implements OnModuleInit {
           config.name,
           {
             chainName: config.name,
+            chainId: config.chainId,
             rpc: config.rpc,
             provider: new EthereumProvider(config.rpc),
             fixedGasPrice: config.fixedGasPrice,
@@ -136,7 +138,7 @@ export class TesterService implements OnModuleInit {
           privateKey,
           fromChainInfo.provider
         );
-        let fromBridge = new LnBridgeSourceContract(
+        let fromBridge = new LnBridgeContract(
           config.sourceBridgeAddress,
           fromWallet.wallet,
           config.direction
@@ -160,6 +162,7 @@ export class TesterService implements OnModuleInit {
           direction: config.direction,
           fromBridge: fromConnectInfo,
           toChain: config.toChain,
+          toChainId: toChainInfo.chainId,
           lnProviders: lnProviders,
           walletAddress: fromWallet.address,
           randomExecTimes: Math.floor(Math.random() * 10),
@@ -171,7 +174,7 @@ export class TesterService implements OnModuleInit {
   async send(bridge: LnBridge) {
     this.logger.log("start to send cross chain tx");
     const fromChainInfo = bridge.fromBridge.chainInfo;
-    const fromBridgeContract = bridge.fromBridge.bridge as LnBridgeSourceContract;
+    const fromBridgeContract = bridge.fromBridge.bridge;
 
     const randomIndex = Math.floor(Math.random() * (bridge.lnProviders.length - 1) + 0.5);
     const lnProvider = bridge.lnProviders[randomIndex];
@@ -206,14 +209,18 @@ export class TesterService implements OnModuleInit {
         const relayerInfo = sortedRelayers[0];
 
         const snapshot = bridge.direction === 'default' ? {
+            remoteChainId: bridge.toChainId,
             provider: relayerInfo.relayer,
             sourceToken: relayerInfo.sendToken,
+            targetToken: relayerInfo.targetToken,
             transferId: relayerInfo.lastTransferId,
             totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(BigNumber.from((relayerInfo.baseFee))),
             withdrawNonce: relayerInfo.withdrawNonce
         } as DefaultSnapshot : {
+            remoteChainId: bridge.toChainId,
             provider: relayerInfo.relayer,
             sourceToken: relayerInfo.sendToken,
+            targetToken: relayerInfo.targetToken,
             transferId: relayerInfo.lastTransferId,
             depositedMargin: relayerInfo.margin,
             totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(BigNumber.from((relayerInfo.baseFee))),

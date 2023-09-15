@@ -7,10 +7,8 @@ import {
 } from "ethers";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 import { erc20 } from "../abi/erc20";
-import { lnDefaultSourceBridge } from "../abi/lnDefaultSourceBridge";
-import { lnDefaultTargetBridge } from "../abi/lnDefaultTargetBridge";
-import { lnOppositeSourceBridge } from "../abi/lnOppositeSourceBridge";
-import { lnOppositeTargetBridge } from "../abi/lnOppositeTargetBridge";
+import { lnDefaultBridge } from "../abi/lnDefaultBridge";
+import { lnOppositeBridge } from "../abi/lnOppositeBridge";
 import { GasPrice } from "../base/provider";
 
 export const zeroAddress: string = "0x0000000000000000000000000000000000000000";
@@ -97,28 +95,32 @@ export class Erc20Contract extends EthereumContract {
 }
 
 export interface DefaultSnapshot {
+    remoteChainId: number;
     provider: string;
     sourceToken: string;
+    targetToken: string;
     transferId: string;
     totalFee: BigNumber;
     withdrawNonce: number;
 }
 
 export interface OppositeSnapshot {
+    remoteChainId: number;
     provider: string;
     sourceToken: string;
+    targetToken: string;
     transferId: string;
-    depositedMargin: BigNumber;
     totalFee: BigNumber;
+    depositedMargin: BigNumber;
 }
 
-export class LnBridgeSourceContract extends EthereumContract {
+export class LnBridgeContract extends EthereumContract {
     private bridgeType: string;
     constructor(address: string, signer: Wallet | providers.Provider, bridgeType: string) {
       if (bridgeType === 'default') {
-        super(address, lnDefaultSourceBridge, signer);
+        super(address, lnDefaultBridge, signer);
       } else {
-        super(address, lnOppositeSourceBridge, signer);
+        super(address, lnOppositeBridge, signer);
       }
       this.bridgeType = bridgeType;
     }
@@ -137,8 +139,10 @@ export class LnBridgeSourceContract extends EthereumContract {
                 "transferAndLockMargin",
                 [
                     [
+                       defaultSnapshot.remoteChainId,
                        defaultSnapshot.provider,
                        defaultSnapshot.sourceToken,
+                       defaultSnapshot.targetToken,
                        defaultSnapshot.transferId,
                        defaultSnapshot.totalFee,
                        defaultSnapshot.withdrawNonce
@@ -157,11 +161,13 @@ export class LnBridgeSourceContract extends EthereumContract {
                 "transferAndLockMargin",
                 [
                     [
+                       oppositeSnapshot.remoteChainId,
                        oppositeSnapshot.provider,
                        oppositeSnapshot.sourceToken,
+                       oppositeSnapshot.targetToken,
                        oppositeSnapshot.transferId,
+                       oppositeSnapshot.totalFee,
                        oppositeSnapshot.depositedMargin,
-                       oppositeSnapshot.totalFee
                     ],
                     amount,
                     receiver,
