@@ -1,5 +1,5 @@
 {
-    "indexer": "https://apollo-test.helixbridge.app/graphql",
+    "indexer": "http://localhost:4002/graphql",
     "chains": [
         {
             "name": "arbitrum-goerli",
@@ -30,179 +30,219 @@
         {
             "fromChain": "arbitrum-goerli",
             "toChain": "goerli",
-            "sourceBridgeAddress": "0x79e6f452f1e491a7aF0382FA0a6EF9368691960D",
-            "targetBridgeAddress": "0x79e6f452f1e491a7aF0382FA0a6EF9368691960D",
+            "sourceBridgeAddress": "0x4C538EfA6e3f9Dfb939AA4F0B224577DA665923a",
+            "targetBridgeAddress": "0x4C538EfA6e3f9Dfb939AA4F0B224577DA665923a",
             "encryptedPrivateKey": "555ba198fac794f4a70332718c7cf536:64ee46e41cfe8277808873614eeb6dc31b0f0c274ad9d4ef53d44485c08b9419a765a417f203b7e9a685c020525cac1f5025b9f817b6ec653895449b99b37bce",
             "direction": "opposite",
             "providers": [
                 {
-                    "fromAddress": "0x39dE82E1d9B8F62E11022FC3FC127a82F93fE47E",
-                    "toAddress": "0x1a70127284B774fF4A4dbfe0115114642f0eca65",
+                    "fromAddress": "0x543bf1AC41485dc78039b9351563E4Dd13A288cb",
+                    "toAddress": "0xa39cffE89567eBfb5c306a07dfb6e5B3ba41F358",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0x6d828718c1097A4C573bc25c638Cc05bF10dFeAF",
-                    "toAddress": "0x2303e4d55BF16a897Cb5Ab71c6225399509d9314",
+                    "fromAddress": "0xBAD026e314a77e727dF643B02f63adA573a3757c",
+                    "toAddress": "0xe9784E0d9A939dbe966b021DE3cd877284DB1B99",
                     "feeLimit": 200
+                },
+                {
+                    "fromAddress": "0x0000000000000000000000000000000000000000",
+                    "toAddress": "0x0000000000000000000000000000000000000000",
+                    "feeLimit": 0.01
                 }
             ]
         },
         {
             "fromChain": "goerli",
             "toChain": "arbitrum-goerli",
-            "sourceBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
-            "targetBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
+            "sourceBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
+            "targetBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
             "encryptedPrivateKey": "ba6aea37523572233243b5b1d7edad0f:1f62e357fd1aa77108dd7ed0be35988d968b59bd4797b0cac99346e858e343926e15a89dede4ceb10d067b4b74b2e8c36545adf06cebb043c168642832ce4a4d",
             "direction": "default",
             "providers": [
                 {
-                    "fromAddress": "0x1a70127284B774fF4A4dbfe0115114642f0eca65",
-                    "toAddress": "0x39dE82E1d9B8F62E11022FC3FC127a82F93fE47E",
+                    "fromAddress": "0xa39cffE89567eBfb5c306a07dfb6e5B3ba41F358",
+                    "toAddress": "0x543bf1AC41485dc78039b9351563E4Dd13A288cb",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0x2303e4d55BF16a897Cb5Ab71c6225399509d9314",
-                    "toAddress": "0x6d828718c1097A4C573bc25c638Cc05bF10dFeAF",
+                    "fromAddress": "0xe9784E0d9A939dbe966b021DE3cd877284DB1B99",
+                    "toAddress": "0xBAD026e314a77e727dF643B02f63adA573a3757c",
                     "feeLimit": 200
+                },
+                {
+                    "fromAddress": "0x0000000000000000000000000000000000000000",
+                    "toAddress": "0x0000000000000000000000000000000000000000",
+                    "feeLimit": 0.01
                 }
             ]
         },
         {
             "fromChain": "goerli",
             "toChain": "mantle-goerli",
-            "sourceBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
-            "targetBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
+            "sourceBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
+            "targetBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
             "encryptedPrivateKey": "e6ddcca682e30cc31a94bcce2010c974:5e7eebd373acbba558c4ee882a586fc0991960fa51b9c2751a571b5f4ed3126d864f58018786b6960e8353bdbcfda6f9adf2c3689fce99190fdb358592c1faf5",
             "direction": "default",
             "providers": [
                 {
-                    "fromAddress": "0x1a70127284B774fF4A4dbfe0115114642f0eca65",
-                    "toAddress": "0x0258Eb547bFEd540ed17843658C018569fe1E328",
+                    "fromAddress": "0xa39cffE89567eBfb5c306a07dfb6e5B3ba41F358",
+                    "toAddress": "0xDb06D904AC5Bdff3b8E6Ac96AFedd3381d94CFDD",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0x2303e4d55BF16a897Cb5Ab71c6225399509d9314",
-                    "toAddress": "0x5F8D4232367759bCe5d9488D3ade77FCFF6B9b6B",
+                    "fromAddress": "0xe9784E0d9A939dbe966b021DE3cd877284DB1B99",
+                    "toAddress": "0xD610DE267f7590D5bCCE89489ECd2C1A4AfdF76B",
                     "feeLimit": 200
+                },
+                {
+                    "fromAddress": "0xc1dC2d65A2243c22344E725677A3E3BEBD26E604",
+                    "toAddress": "0x0000000000000000000000000000000000000000",
+                    "feeLimit": 0.1
                 }
             ]
         },
         {
             "fromChain": "mantle-goerli",
             "toChain": "goerli",
-            "sourceBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
-            "targetBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
+            "sourceBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
+            "targetBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
             "encryptedPrivateKey": "555ba198fac794f4a70332718c7cf536:64ee46e41cfe8277808873614eeb6dc31b0f0c274ad9d4ef53d44485c08b9419a765a417f203b7e9a685c020525cac1f5025b9f817b6ec653895449b99b37bce",
             "direction": "default",
             "providers": [
                 {
-                    "fromAddress": "0x0258Eb547bFEd540ed17843658C018569fe1E328",
-                    "toAddress": "0x1a70127284B774fF4A4dbfe0115114642f0eca65",
+                    "fromAddress": "0xDb06D904AC5Bdff3b8E6Ac96AFedd3381d94CFDD",
+                    "toAddress": "0xa39cffE89567eBfb5c306a07dfb6e5B3ba41F358",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0x5F8D4232367759bCe5d9488D3ade77FCFF6B9b6B",
-                    "toAddress": "0x2303e4d55BF16a897Cb5Ab71c6225399509d9314",
+                    "fromAddress": "0xD610DE267f7590D5bCCE89489ECd2C1A4AfdF76B",
+                    "toAddress": "0xe9784E0d9A939dbe966b021DE3cd877284DB1B99",
                     "feeLimit": 200
+                },
+                {
+                    "fromAddress": "0x0000000000000000000000000000000000000000",
+                    "toAddress": "0xc1dC2d65A2243c22344E725677A3E3BEBD26E604",
+                    "feeLimit": 0.01
                 }
             ]
         },
         {
             "fromChain": "goerli",
             "toChain": "linea-goerli",
-            "sourceBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
-            "targetBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
+            "sourceBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
+            "targetBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
             "encryptedPrivateKey": "ba6aea37523572233243b5b1d7edad0f:1f62e357fd1aa77108dd7ed0be35988d968b59bd4797b0cac99346e858e343926e15a89dede4ceb10d067b4b74b2e8c36545adf06cebb043c168642832ce4a4d",
             "direction": "default",
             "providers": [
                 {
-                    "fromAddress": "0x1a70127284B774fF4A4dbfe0115114642f0eca65",
-                    "toAddress": "0xb5E028f980dF5533cB0e8F04530B76637383d993",
+                    "fromAddress": "0xa39cffE89567eBfb5c306a07dfb6e5B3ba41F358",
+                    "toAddress": "0x8f3663930211f3DE17619FEB2eeB44c9c3F44a06",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0x2303e4d55BF16a897Cb5Ab71c6225399509d9314",
-                    "toAddress": "0xBC1A2f123Dc9CD2ec8d3cE42eF16c28F3C9bA686",
+                    "fromAddress": "0xe9784E0d9A939dbe966b021DE3cd877284DB1B99",
+                    "toAddress": "0xeC89AF5FF618bbF667755BE9d63C69F21F1c00C8",
                     "feeLimit": 200
+                },
+                {
+                    "fromAddress": "0x0000000000000000000000000000000000000000",
+                    "toAddress": "0x0000000000000000000000000000000000000000",
+                    "feeLimit": 0.01
                 }
             ]
         },
         {
             "fromChain": "linea-goerli",
             "toChain": "goerli",
-            "sourceBridgeAddress": "0x79e6f452f1e491a7aF0382FA0a6EF9368691960D",
-            "targetBridgeAddress": "0x79e6f452f1e491a7aF0382FA0a6EF9368691960D",
+            "sourceBridgeAddress": "0x4C538EfA6e3f9Dfb939AA4F0B224577DA665923a",
+            "targetBridgeAddress": "0x4C538EfA6e3f9Dfb939AA4F0B224577DA665923a",
             "encryptedPrivateKey": "e6ddcca682e30cc31a94bcce2010c974:5e7eebd373acbba558c4ee882a586fc0991960fa51b9c2751a571b5f4ed3126d864f58018786b6960e8353bdbcfda6f9adf2c3689fce99190fdb358592c1faf5",
             "direction": "opposite",
             "providers": [
                 {
-                    "fromAddress": "0xb5E028f980dF5533cB0e8F04530B76637383d993",
-                    "toAddress": "0x1a70127284B774fF4A4dbfe0115114642f0eca65",
+                    "fromAddress": "0x8f3663930211f3DE17619FEB2eeB44c9c3F44a06",
+                    "toAddress": "0xa39cffE89567eBfb5c306a07dfb6e5B3ba41F358",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0xBC1A2f123Dc9CD2ec8d3cE42eF16c28F3C9bA686",
-                    "toAddress": "0x2303e4d55BF16a897Cb5Ab71c6225399509d9314",
+                    "fromAddress": "0xeC89AF5FF618bbF667755BE9d63C69F21F1c00C8",
+                    "toAddress": "0xe9784E0d9A939dbe966b021DE3cd877284DB1B99",
                     "feeLimit": 200
+                },
+                {
+                    "fromAddress": "0x0000000000000000000000000000000000000000",
+                    "toAddress": "0x0000000000000000000000000000000000000000",
+                    "feeLimit": 0.01
                 }
             ]
         },
         {
             "fromChain": "linea-goerli",
             "toChain": "arbitrum-goerli",
-            "sourceBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
-            "targetBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
+            "sourceBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
+            "targetBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
             "encryptedPrivateKey": "555ba198fac794f4a70332718c7cf536:64ee46e41cfe8277808873614eeb6dc31b0f0c274ad9d4ef53d44485c08b9419a765a417f203b7e9a685c020525cac1f5025b9f817b6ec653895449b99b37bce",
             "direction": "default",
             "providers": [
                 {
-                    "fromAddress": "0xb5E028f980dF5533cB0e8F04530B76637383d993",
-                    "toAddress": "0x39dE82E1d9B8F62E11022FC3FC127a82F93fE47E",
+                    "fromAddress": "0x8f3663930211f3DE17619FEB2eeB44c9c3F44a06",
+                    "toAddress": "0x543bf1AC41485dc78039b9351563E4Dd13A288cb",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0xBC1A2f123Dc9CD2ec8d3cE42eF16c28F3C9bA686",
-                    "toAddress": "0x6d828718c1097A4C573bc25c638Cc05bF10dFeAF",
+                    "fromAddress": "0xeC89AF5FF618bbF667755BE9d63C69F21F1c00C8",
+                    "toAddress": "0xBAD026e314a77e727dF643B02f63adA573a3757c",
                     "feeLimit": 200
+                },
+                {
+                    "fromAddress": "0x0000000000000000000000000000000000000000",
+                    "toAddress": "0x0000000000000000000000000000000000000000",
+                    "feeLimit": 0.01
                 }
             ]
         },
         {
             "fromChain": "arbitrum-goerli",
             "toChain": "linea-goerli",
-            "sourceBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
-            "targetBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
+            "sourceBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
+            "targetBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
             "encryptedPrivateKey": "ba6aea37523572233243b5b1d7edad0f:1f62e357fd1aa77108dd7ed0be35988d968b59bd4797b0cac99346e858e343926e15a89dede4ceb10d067b4b74b2e8c36545adf06cebb043c168642832ce4a4d",
             "direction": "default",
             "providers": [
                 {
-                    "fromAddress": "0x39dE82E1d9B8F62E11022FC3FC127a82F93fE47E",
-                    "toAddress": "0xb5E028f980dF5533cB0e8F04530B76637383d993",
+                    "fromAddress": "0x543bf1AC41485dc78039b9351563E4Dd13A288cb",
+                    "toAddress": "0x8f3663930211f3DE17619FEB2eeB44c9c3F44a06",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0x6d828718c1097A4C573bc25c638Cc05bF10dFeAF",
-                    "toAddress": "0xBC1A2f123Dc9CD2ec8d3cE42eF16c28F3C9bA686",
+                    "fromAddress": "0xBAD026e314a77e727dF643B02f63adA573a3757c",
+                    "toAddress": "0xeC89AF5FF618bbF667755BE9d63C69F21F1c00C8",
                     "feeLimit": 200
+                },
+                {
+                    "fromAddress": "0x0000000000000000000000000000000000000000",
+                    "toAddress": "0x0000000000000000000000000000000000000000",
+                    "feeLimit": 0.01
                 }
             ]
         },
         {
             "fromChain": "arbitrum-goerli",
             "toChain": "mantle-goerli",
-            "sourceBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
-            "targetBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
+            "sourceBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
+            "targetBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
             "encryptedPrivateKey": "e6ddcca682e30cc31a94bcce2010c974:5e7eebd373acbba558c4ee882a586fc0991960fa51b9c2751a571b5f4ed3126d864f58018786b6960e8353bdbcfda6f9adf2c3689fce99190fdb358592c1faf5",
             "direction": "default",
             "providers": [
                 {
-                    "fromAddress": "0x39dE82E1d9B8F62E11022FC3FC127a82F93fE47E",
-                    "toAddress": "0x0258Eb547bFEd540ed17843658C018569fe1E328",
+                    "fromAddress": "0x543bf1AC41485dc78039b9351563E4Dd13A288cb",
+                    "toAddress": "0xDb06D904AC5Bdff3b8E6Ac96AFedd3381d94CFDD",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0x6d828718c1097A4C573bc25c638Cc05bF10dFeAF",
-                    "toAddress": "0x5F8D4232367759bCe5d9488D3ade77FCFF6B9b6B",
+                    "fromAddress": "0xBAD026e314a77e727dF643B02f63adA573a3757c",
+                    "toAddress": "0xD610DE267f7590D5bCCE89489ECd2C1A4AfdF76B",
                     "feeLimit": 200
                 }
             ]
@@ -210,19 +250,19 @@
         {
             "fromChain": "mantle-goerli",
             "toChain": "arbitrum-goerli",
-            "sourceBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
-            "targetBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
+            "sourceBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
+            "targetBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
             "encryptedPrivateKey": "555ba198fac794f4a70332718c7cf536:64ee46e41cfe8277808873614eeb6dc31b0f0c274ad9d4ef53d44485c08b9419a765a417f203b7e9a685c020525cac1f5025b9f817b6ec653895449b99b37bce",
             "direction": "default",
             "providers": [
                 {
-                    "fromAddress": "0x0258Eb547bFEd540ed17843658C018569fe1E328",
-                    "toAddress": "0x39dE82E1d9B8F62E11022FC3FC127a82F93fE47E",
+                    "fromAddress": "0xDb06D904AC5Bdff3b8E6Ac96AFedd3381d94CFDD",
+                    "toAddress": "0x543bf1AC41485dc78039b9351563E4Dd13A288cb",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0x5F8D4232367759bCe5d9488D3ade77FCFF6B9b6B",
-                    "toAddress": "0x6d828718c1097A4C573bc25c638Cc05bF10dFeAF",
+                    "fromAddress": "0xD610DE267f7590D5bCCE89489ECd2C1A4AfdF76B",
+                    "toAddress": "0xBAD026e314a77e727dF643B02f63adA573a3757c",
                     "feeLimit": 200
                 }
             ]
@@ -230,19 +270,19 @@
         {
             "fromChain": "mantle-goerli",
             "toChain": "linea-goerli",
-            "sourceBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
-            "targetBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
+            "sourceBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
+            "targetBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
             "encryptedPrivateKey": "ba6aea37523572233243b5b1d7edad0f:1f62e357fd1aa77108dd7ed0be35988d968b59bd4797b0cac99346e858e343926e15a89dede4ceb10d067b4b74b2e8c36545adf06cebb043c168642832ce4a4d",
             "direction": "default",
             "providers": [
                 {
-                    "fromAddress": "0x0258Eb547bFEd540ed17843658C018569fe1E328",
-                    "toAddress": "0xb5E028f980dF5533cB0e8F04530B76637383d993",
+                    "fromAddress": "0xDb06D904AC5Bdff3b8E6Ac96AFedd3381d94CFDD",
+                    "toAddress": "0x8f3663930211f3DE17619FEB2eeB44c9c3F44a06",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0x5F8D4232367759bCe5d9488D3ade77FCFF6B9b6B",
-                    "toAddress": "0xBC1A2f123Dc9CD2ec8d3cE42eF16c28F3C9bA686",
+                    "fromAddress": "0xD610DE267f7590D5bCCE89489ECd2C1A4AfdF76B",
+                    "toAddress": "0xeC89AF5FF618bbF667755BE9d63C69F21F1c00C8",
                     "feeLimit": 200
                 }
             ]
@@ -250,19 +290,19 @@
         {
             "fromChain": "linea-goerli",
             "toChain": "mantle-goerli",
-            "sourceBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
-            "targetBridgeAddress": "0x54cc9716905ba8ebdD01E6364125cA338Cd0054E",
+            "sourceBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
+            "targetBridgeAddress": "0x7e101911E5FB461d78FBde3992f76F3Bf8BbA829",
             "encryptedPrivateKey": "e6ddcca682e30cc31a94bcce2010c974:5e7eebd373acbba558c4ee882a586fc0991960fa51b9c2751a571b5f4ed3126d864f58018786b6960e8353bdbcfda6f9adf2c3689fce99190fdb358592c1faf5",
             "direction": "default",
             "providers": [
                 {
-                    "fromAddress": "0xb5E028f980dF5533cB0e8F04530B76637383d993",
-                    "toAddress": "0x0258Eb547bFEd540ed17843658C018569fe1E328",
+                    "fromAddress": "0x8f3663930211f3DE17619FEB2eeB44c9c3F44a06",
+                    "toAddress": "0xDb06D904AC5Bdff3b8E6Ac96AFedd3381d94CFDD",
                     "feeLimit": 200
                 },
                 {
-                    "fromAddress": "0xBC1A2f123Dc9CD2ec8d3cE42eF16c28F3C9bA686",
-                    "toAddress": "0x5F8D4232367759bCe5d9488D3ade77FCFF6B9b6B",
+                    "fromAddress": "0xeC89AF5FF618bbF667755BE9d63C69F21F1c00C8",
+                    "toAddress": "0xD610DE267f7590D5bCCE89489ECd2C1A4AfdF76B",
                     "feeLimit": 200
                 }
             ]

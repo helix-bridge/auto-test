@@ -179,7 +179,10 @@ export class TesterService implements OnModuleInit {
     const randomIndex = Math.floor(Math.random() * (bridge.lnProviders.length - 1) + 0.5);
     const lnProvider = bridge.lnProviders[randomIndex];
     const randomAmount = Math.floor(Math.random() * 1000);
-    const srcDecimals = await lnProvider.fromToken.decimals();
+    let srcDecimals = 18;
+    if (lnProvider.fromAddress !== zeroAddress) {
+        srcDecimals = await lnProvider.fromToken.decimals();
+    }
     let amount = new Any(randomAmount, srcDecimals).Number;
     let value = BigNumber.from(0);
     if (lnProvider.fromAddress === zeroAddress) {
