@@ -197,7 +197,7 @@ export class TesterService implements OnModuleInit {
             token: \"${lnProvider.fromAddress.toLowerCase()}\",
             amount: \"${amount}\",
             decimals: ${srcDecimals},
-        ) {baseFee, lastTransferId, liquidityFeeRate, margin, relayer, sendToken, withdrawNonce}}`;
+        ) {baseFee, protocolFee, lastTransferId, liquidityFeeRate, margin, relayer, sendToken, withdrawNonce}}`;
 
         const sortedRelayers = await axios
         .post(this.configureService.config.indexer, {
@@ -211,6 +211,8 @@ export class TesterService implements OnModuleInit {
             return;
         }
         const relayerInfo = sortedRelayers[0];
+        const baseFee = BigNumber.from(relayerInfo.baseFee);
+        const protocolFee = BigNumber.from(relayerInfo.protocolFee);
 
         const snapshot = bridge.direction === 'default' ? {
             remoteChainId: bridge.toChainId,
@@ -218,7 +220,7 @@ export class TesterService implements OnModuleInit {
             sourceToken: relayerInfo.sendToken,
             targetToken: lnProvider.toAddress,
             transferId: relayerInfo.lastTransferId,
-            totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(BigNumber.from((relayerInfo.baseFee))),
+            totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(baseFee).add(protocolFee),
             withdrawNonce: relayerInfo.withdrawNonce
         } as DefaultSnapshot : {
             remoteChainId: bridge.toChainId,
@@ -227,7 +229,7 @@ export class TesterService implements OnModuleInit {
             targetToken: lnProvider.toAddress,
             transferId: relayerInfo.lastTransferId,
             depositedMargin: relayerInfo.margin,
-            totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(BigNumber.from((relayerInfo.baseFee))),
+            totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(baseFee).add(protocolFee),
         } as OppositeSnapshot;
 
 
