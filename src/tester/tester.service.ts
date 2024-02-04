@@ -190,14 +190,14 @@ export class TesterService implements OnModuleInit {
         value = amount;
     }
     let query = `{
-        sortedLnv20RelayInfos(
+        sortedLnBridgeRelayInfos(
             fromChain: \"${fromChainInfo.chainName}\",
             toChain: \"${bridge.toChain}\",
-            bridge: \"lnbridgev20-${bridge.direction}\",
+            bridge: \"lnv2-${bridge.direction}\",
             token: \"${lnProvider.fromAddress.toLowerCase()}\",
             amount: \"${amount}\",
             decimals: ${srcDecimals},
-        ) {baseFee, protocolFee, lastTransferId, liquidityFeeRate, margin, relayer, sendToken, withdrawNonce}}`;
+        ) {records {baseFee, protocolFee, lastTransferId, liquidityFeeRate, margin, relayer, sendToken, withdrawNonce}}}`;
 
         const sortedRelayers = await axios
         .post(this.configureService.config.indexer, {
@@ -205,7 +205,7 @@ export class TesterService implements OnModuleInit {
             variables: {},
             operationName: null,
         })
-        .then((res) => res.data.data.sortedLnv20RelayInfos);
+        .then((res) => res.data.data.sortedLnBridgeRelayInfos.records);
 
         if (!sortedRelayers || sortedRelayers.length === 0) {
             return;
@@ -243,7 +243,7 @@ export class TesterService implements OnModuleInit {
             value = value.add(snapshot.totalFee);
         }
         let gasPrice = await fromChainInfo.provider.feeData(1);
-        if (fromChainInfo.provider.gasPriceCompare(gasPrice, new GWei(10))) {
+        if (fromChainInfo.provider.gasPriceCompare(gasPrice, new GWei(20))) {
             this.logger.log(`gas price too large ${gasPrice}`);
             return;
         }
@@ -256,6 +256,7 @@ export class TesterService implements OnModuleInit {
             new EtherBigNumber(1000000).Number,
             value
         );
+        this.logger.log("send transaction finished");
   }
 }
 
