@@ -17,7 +17,6 @@ import {
 import { EthereumConnectedWallet } from "../base/wallet";
 import { ConfigureService } from "../configure/configure.service";
 import { Encrypto } from "../base/encrypto";
-import { BigNumber } from "ethers";
 import { last } from "lodash";
 
 export class ChainInfo {
@@ -184,9 +183,9 @@ export class TesterService implements OnModuleInit {
         srcDecimals = await lnProvider.fromToken.decimals();
     }
     let amount = new Any(randomAmount, srcDecimals).Number;
-    let value = BigNumber.from(0);
+    let value = BigInt(0);
     if (lnProvider.fromAddress === zeroAddress) {
-        amount = amount.div(1000000);
+        amount = amount / BigInt(1000000);
         value = amount;
     }
     let query = `{
@@ -211,8 +210,8 @@ export class TesterService implements OnModuleInit {
             return;
         }
         const relayerInfo = sortedRelayers[0];
-        const baseFee = BigNumber.from(relayerInfo.baseFee);
-        const protocolFee = BigNumber.from(relayerInfo.protocolFee);
+        const baseFee = BigInt(relayerInfo.baseFee);
+        const protocolFee = BigInt(relayerInfo.protocolFee);
 
         const snapshot = bridge.direction === 'default' ? {
             remoteChainId: bridge.toChainId,
@@ -220,7 +219,7 @@ export class TesterService implements OnModuleInit {
             sourceToken: relayerInfo.sendToken,
             targetToken: lnProvider.toAddress,
             transferId: relayerInfo.lastTransferId,
-            totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(baseFee).add(protocolFee),
+            totalFee: amount * BigInt(relayerInfo.liquidityFeeRate) / BigInt(100000) + baseFee + protocolFee,
             withdrawNonce: relayerInfo.withdrawNonce
         } as DefaultSnapshot : {
             remoteChainId: bridge.toChainId,
@@ -229,22 +228,22 @@ export class TesterService implements OnModuleInit {
             targetToken: lnProvider.toAddress,
             transferId: relayerInfo.lastTransferId,
             depositedMargin: relayerInfo.margin,
-            totalFee: amount.mul(BigNumber.from(relayerInfo.liquidityFeeRate)).div(100000).add(baseFee).add(protocolFee),
+            totalFee: amount * BigInt(relayerInfo.liquidityFeeRate) / BigInt(100000) + baseFee + protocolFee,
         } as OppositeSnapshot;
 
 
         const feeLimit = new Any(lnProvider.feeLimit, srcDecimals).Number;
-        if (snapshot.totalFee.gt(feeLimit)) {
+        if (snapshot.totalFee > feeLimit) {
             this.logger.log(`fee is too big ${snapshot.totalFee} > ${feeLimit}, token ${relayerInfo.sendToken}`);
             return;
         }
 
         if (lnProvider.fromAddress === zeroAddress) {
-            value = value.add(snapshot.totalFee);
+            value = value + snapshot.totalFee;
         }
         let gasPrice = await fromChainInfo.provider.feeData(1);
-        if (fromChainInfo.provider.gasPriceCompare(gasPrice, new GWei(20))) {
-            this.logger.log(`gas price too large ${gasPrice}`);
+        if (fromChainInfo.provider.gasPriceCompare(gasPrice, new GWei(100))) {
+            this.logger.log(`[${fromChainInfo.chainName}]gas price too large ${fromChainInfo.provider.gasPriceValue(gasPrice)}`);
             return;
         }
         this.logger.log("all request checked, start to send test transaction");
@@ -253,7 +252,7 @@ export class TesterService implements OnModuleInit {
             amount,
             bridge.walletAddress,
             gasPrice,
-            new EtherBigNumber(1000000).Number,
+            null,
             value
         );
         this.logger.log("send transaction finished");

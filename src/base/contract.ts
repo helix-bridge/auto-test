@@ -1,9 +1,10 @@
 import {
   Wallet,
-  providers,
+  HDNodeWallet,
   Contract,
   ContractInterface,
-  BigNumber,
+  ethers,
+  InterfaceAbi
 } from "ethers";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 import { erc20 } from "../abi/erc20";
@@ -19,8 +20,8 @@ export class EthereumContract {
   public address: string;
   constructor(
     address: string,
-    abi: ContractInterface,
-    signer: Wallet | providers.Provider
+    abi: InterfaceAbi,
+    signer: Wallet | HDNodeWallet | ethers.Provider
   ) {
     this.contract = new Contract(address, abi, signer);
     this.address = address;
@@ -30,9 +31,9 @@ export class EthereumContract {
     method: string,
     args: any,
     gas: GasPrice,
-    value: BigNumber | null = null,
+    value: bigint | null = null,
     nonce: number | null = null,
-    gasLimit: BigNumber | null = null
+    gasLimit: bigint | null = null
   ): Promise<TransactionResponse> {
     const gasArgs = gas.isEip1559 ? gas.eip1559fee : gas.fee;
     const txConfig = Object.entries({
@@ -47,8 +48,8 @@ export class EthereumContract {
   async staticCall(
     method: string,
     args: any,
-    value: BigNumber | null = null,
-    gasLimit: BigNumber | null = null
+    value: bigint | null = null,
+    gasLimit: bigint | null = null
   ): Promise<string> | null {
     try {
       if (value != null) {
@@ -63,7 +64,7 @@ export class EthereumContract {
 }
 
 export class Erc20Contract extends EthereumContract {
-  constructor(address: string, signer: Wallet | providers.Provider) {
+  constructor(address: string, signer: Wallet | HDNodeWallet | ethers.Provider) {
     super(address, erc20, signer);
   }
 
@@ -80,14 +81,14 @@ export class Erc20Contract extends EthereumContract {
     return await this.contract.decimals();
   }
 
-  async balanceOf(address: string): Promise<BigNumber> {
+  async balanceOf(address: string): Promise<bigint> {
     return await this.contract.balanceOf(address);
   }
 
   // call
   async approve(
     address: string,
-    amount: BigNumber,
+    amount: bigint,
     gas: GasPrice
   ): Promise<TransactionResponse> {
     return this.call("approve", [address, amount], gas, null, null, null);
@@ -100,7 +101,7 @@ export interface DefaultSnapshot {
     sourceToken: string;
     targetToken: string;
     transferId: string;
-    totalFee: BigNumber;
+    totalFee: bigint;
     withdrawNonce: number;
 }
 
@@ -110,13 +111,13 @@ export interface OppositeSnapshot {
     sourceToken: string;
     targetToken: string;
     transferId: string;
-    totalFee: BigNumber;
-    depositedMargin: BigNumber;
+    totalFee: bigint;
+    depositedMargin: bigint;
 }
 
 export class LnBridgeContract extends EthereumContract {
     private bridgeType: string;
-    constructor(address: string, signer: Wallet | providers.Provider, bridgeType: string) {
+    constructor(address: string, signer: Wallet | HDNodeWallet | ethers.Provider, bridgeType: string) {
       if (bridgeType === 'default') {
         super(address, lnDefaultBridge, signer);
       } else {
@@ -127,11 +128,11 @@ export class LnBridgeContract extends EthereumContract {
 
     async transferAndLockMargin(
         snapshot: DefaultSnapshot | OppositeSnapshot,
-        amount: BigNumber,
+        amount: bigint,
         receiver: string,
         gas: GasPrice,
-        gasLimit: BigNumber | null = null,
-        value: BigNumber = BigNumber.from(0)
+        gasLimit: bigint | null = null,
+        value: bigint = BigInt(0)
     ) {
         if (this.bridgeType === 'default') {
             const defaultSnapshot = snapshot as DefaultSnapshot;
