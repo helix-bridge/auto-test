@@ -257,7 +257,8 @@ export class TesterService implements OnModuleInit {
     if (lnProvider.fromAddress !== zeroAddress) {
         srcDecimals = await lnProvider.fromToken.decimals();
     }
-    let amount = new Any(randomAmount.toFixed(Number((Math.random() * 3).toFixed())), srcDecimals).Number;
+    const formatedAmount = Number((randomAmount/1000.0).toFixed(Number((Math.random() * 6).toFixed()))) * 1000;
+    let amount = new Any(formatedAmount, srcDecimals).Number;
     let value = BigInt(0);
     if (lnProvider.fromAddress === zeroAddress) {
         value = amount;
