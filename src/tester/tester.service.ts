@@ -235,7 +235,7 @@ export class TesterService implements OnModuleInit {
         return {
           bridgeType: config.bridgeType,
           fromBridge: fromConnectInfo,
-          toChain: toChainInfo.name,
+          toChain: toChainInfo.chainName,
           toChainId: toChainInfo.chainId,
           lnProviders: lnProviders,
           walletAddress: fromWallet.address,
@@ -257,7 +257,7 @@ export class TesterService implements OnModuleInit {
     if (lnProvider.fromAddress !== zeroAddress) {
         srcDecimals = await lnProvider.fromToken.decimals();
     }
-    let amount = new Any(randomAmount, srcDecimals).Number;
+    let amount = new Any(randomAmount.toFixed(Number((Math.random() * 3).toFixed())), srcDecimals).Number;
     let value = BigInt(0);
     if (lnProvider.fromAddress === zeroAddress) {
         amount = amount / BigInt(1000000);
@@ -332,7 +332,7 @@ export class TesterService implements OnModuleInit {
         }
         this.logger.log("all request checked, start to send test transaction");
         if (bridge.bridgeType === 'lnv3') {
-          await (fromBridgeContract as Lnv3BridgeContract).transferAndLockMargin(
+          const tx = await (fromBridgeContract as Lnv3BridgeContract).transferAndLockMargin(
               bridge.toChainId,
               relayerInfo.relayer,
               relayerInfo.sendToken,
@@ -344,8 +344,9 @@ export class TesterService implements OnModuleInit {
               null,
               value
           );
+          this.logger.log(`finish to send cross chain tx, hash: ${tx.hash}`);
         } else {
-          await (fromBridgeContract as LnBridgeContract).transferAndLockMargin(
+          const tx = await (fromBridgeContract as LnBridgeContract).transferAndLockMargin(
               snapshot,
               amount,
               bridge.walletAddress,
@@ -353,6 +354,7 @@ export class TesterService implements OnModuleInit {
               null,
               value
           );
+          this.logger.log(`finish to send cross chain tx, hash: ${tx.hash}`);
         }
         this.logger.log("send transaction finished");
   }

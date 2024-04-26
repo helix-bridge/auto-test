@@ -1,7 +1,7 @@
 {
     "indexer": "https://apollo-test.helixbridge.app/graphql",
     "env": "test",
-    "chains": [
+    "rpcnodes": [
         {
             "name": "arbitrum-sepolia",
             "rpc": "https://sepolia-rollup.arbitrum.io/rpc",
@@ -26,7 +26,8 @@
         {
             "name": "zksync-sepolia",
             "rpc": "https://sepolia.era.zksync.dev",
-            "chainId": 300
+            "chainId": 300,
+            "fixedGasPrice": 0.1
         }
     ],
     "bridges": [
@@ -58,7 +59,7 @@
         {
             "direction": "sepolia->arbitrum-sepolia",
             "encryptedPrivateKey": "dd4f15431b7f7b5e340729ddd9bbde50:37faa57fcef2b28633965d09fd7c0b129f24c6d5b6b167dbc504a1220cffac308381b30d3437b6a9d8e48087d314dad4c99b8b51d5c546258619bfbe34dfa0f1",
-            "direction": "lnv2-opposite",
+            "bridgeType": "lnv2-opposite",
             "tokens": [
                 {
                     "symbol": "usdt->usdt",
@@ -83,7 +84,7 @@
         {
             "direction": "morph->arbitrum-sepolia",
             "encryptedPrivateKey": "f2119fa1947b26eac48478c4c80fcc52:8d6ec1766e78d5dc3f1abe6f23c8f6d02ca07f1299d579baf580668dc8f6e0510ed9330e94a84a9a55d655d3c2eb30de9fdcd05d2a8a301a08468c1b6d65d200",
-            "direction": "lnv3",
+            "bridgeType": "lnv3",
             "tokens": [
                 {
                     "symbol": "usdt->usdt",
@@ -102,7 +103,7 @@
         {
             "direction": "arbitrum-sepolia->morph",
             "encryptedPrivateKey": "f2119fa1947b26eac48478c4c80fcc52:8d6ec1766e78d5dc3f1abe6f23c8f6d02ca07f1299d579baf580668dc8f6e0510ed9330e94a84a9a55d655d3c2eb30de9fdcd05d2a8a301a08468c1b6d65d200",
-            "direction": "lnv3",
+            "bridgeType": "lnv3",
             "tokens": [
                 {
                     "symbol": "usdt->usdt",
@@ -121,7 +122,7 @@
         {
             "direction": "zksync-sepolia->arbitrum-sepolia",
             "encryptedPrivateKey": "f2119fa1947b26eac48478c4c80fcc52:8d6ec1766e78d5dc3f1abe6f23c8f6d02ca07f1299d579baf580668dc8f6e0510ed9330e94a84a9a55d655d3c2eb30de9fdcd05d2a8a301a08468c1b6d65d200",
-            "direction": "lnv3",
+            "bridgeType": "lnv3",
             "tokens": [
                 {
                     "symbol": "usdt->usdt",
@@ -146,7 +147,7 @@
         {
             "direction": "arbitrum-sepolia->zksync-sepolia",
             "encryptedPrivateKey": "f2119fa1947b26eac48478c4c80fcc52:8d6ec1766e78d5dc3f1abe6f23c8f6d02ca07f1299d579baf580668dc8f6e0510ed9330e94a84a9a55d655d3c2eb30de9fdcd05d2a8a301a08468c1b6d65d200",
-            "direction": "lnv3",
+            "bridgeType": "lnv3",
             "tokens": [
                 {
                     "symbol": "usdt->usdt",
