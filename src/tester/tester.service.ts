@@ -103,7 +103,7 @@ export class TesterService implements OnModuleInit {
           try {
             await this.send(item);
           } catch (err) {
-            this.logger.warn(`send bridge message failed, err: ${err}`);
+            this.logger.warn(`[${fromChainName}->${item.toChain}]send bridge message failed, err: ${err}`);
           }
           timer.isProcessing = false;
         }
@@ -260,14 +260,13 @@ export class TesterService implements OnModuleInit {
     let amount = new Any(randomAmount.toFixed(Number((Math.random() * 3).toFixed())), srcDecimals).Number;
     let value = BigInt(0);
     if (lnProvider.fromAddress === zeroAddress) {
-        amount = amount / BigInt(1000000);
         value = amount;
     }
     let query = `{
         sortedLnBridgeRelayInfos(
             fromChain: \"${fromChainInfo.chainName}\",
             toChain: \"${bridge.toChain}\",
-            bridge: \"lnv2-${bridge.bridgeType}\",
+            bridge: \"${bridge.bridgeType}\",
             token: \"${lnProvider.fromAddress.toLowerCase()}\",
             amount: \"${amount}\",
             decimals: ${srcDecimals},
@@ -330,9 +329,9 @@ export class TesterService implements OnModuleInit {
             this.logger.log(`[${fromChainInfo.chainName}]gas price too large ${fromChainInfo.provider.gasPriceValue(gasPrice)}`);
             return;
         }
-        this.logger.log("all request checked, start to send test transaction");
+        this.logger.log(`[${fromChainInfo.chainName}->${bridge.toChain}]all request checked, start to send test transaction`);
         if (bridge.bridgeType === 'lnv3') {
-          const tx = await (fromBridgeContract as Lnv3BridgeContract).transferAndLockMargin(
+          const tx = await (fromBridgeContract as Lnv3BridgeContract).lockAndRemoteRelease(
               bridge.toChainId,
               relayerInfo.relayer,
               relayerInfo.sendToken,

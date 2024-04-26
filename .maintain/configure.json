@@ -135,12 +135,6 @@
                     "feeLimit": 200,
                     "minAmount": 1,
                     "maxAmount": 5000
-                },
-                {
-                    "symbol": "eth->eth",
-                    "feeLimit": 0.01,
-                    "minAmount": 0.000001,
-                    "maxAmount": 0.00001
                 }
             ]
         },
@@ -160,12 +154,6 @@
                     "feeLimit": 200,
                     "minAmount": 1,
                     "maxAmount": 5000
-                },
-                {
-                    "symbol": "eth->eth",
-                    "feeLimit": 0.01,
-                    "minAmount": 0.000001,
-                    "maxAmount": 0.00001
                 }
             ]
         }
