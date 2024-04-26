@@ -10,6 +10,7 @@ import { TransactionResponse } from "@ethersproject/abstract-provider";
 import { erc20 } from "../abi/erc20";
 import { lnDefaultBridge } from "../abi/lnDefaultBridge";
 import { lnOppositeBridge } from "../abi/lnOppositeBridge";
+import { lnv3Bridge } from "../abi/lnv3Bridge";
 import { GasPrice } from "../base/provider";
 
 export const zeroAddress: string = "0x0000000000000000000000000000000000000000";
@@ -115,6 +116,17 @@ export interface OppositeSnapshot {
     depositedMargin: bigint;
 }
 
+export interface Lnv3TransferParams {
+    remoteChainId: number;
+    provider: string;
+    sourceToken: string;
+    targetToken: string;
+    totalFee: bigint;
+    amount: bigint;
+    receiver: string;
+    timestamp: bigint;
+}
+
 export class LnBridgeContract extends EthereumContract {
     private bridgeType: string;
     constructor(address: string, signer: Wallet | HDNodeWallet | ethers.Provider, bridgeType: string) {
@@ -179,6 +191,46 @@ export class LnBridgeContract extends EthereumContract {
                 gasLimit
             );
         }
+    }
+}
+
+export class Lnv3BridgeContract extends EthereumContract {
+    constructor(address: string, signer: Wallet | HDNodeWallet | ethers.Provider) {
+      super(address, lnv3Bridge, signer);
+    }
+
+    async transferAndLockMargin(
+        remoteChainId: number,
+        provider: string,
+        sourceToken: string,
+        targetToken: string,
+        totalFee: bigint,
+        amount: bigint,
+        receiver: string,
+        gas: GasPrice,
+        gasLimit: bigint | null = null,
+        value: bigint = BigInt(0)
+    ) {
+        const timestamp = Date.now();
+        return await this.call(
+            "transferAndLockMargin",
+            [
+                [
+                   remoteChainId,
+                   provider,
+                   sourceToken,
+                   targetToken,
+                   totalFee,
+                   amount,
+                   receiver,
+                   timestamp
+                ],
+            ],
+            gas,
+            value,
+            null,
+            gasLimit
+        )
     }
 }
 

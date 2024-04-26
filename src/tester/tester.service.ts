@@ -4,6 +4,7 @@ import axios from "axios";
 import {
   Erc20Contract,
   LnBridgeContract,
+  Lnv3BridgeContract,
   DefaultSnapshot,
   OppositeSnapshot,
   zeroAddress,
@@ -29,7 +30,7 @@ export class ChainInfo {
 
 export class BridgeConnectInfo {
   chainInfo: ChainInfo;
-  bridge: LnBridgeContract;
+  bridge: LnBridgeContract | Lnv3BridgeContract;
 }
 
 export class LnProviderInfo {
@@ -137,7 +138,10 @@ export class TesterService implements OnModuleInit {
           privateKey,
           fromChainInfo.provider
         );
-        let fromBridge = new LnBridgeContract(
+        let fromBridge = config.direction === 'lnv3' ? new Lnv3BridgeContract(
+            config.sourceBridgeAddress,
+            fromWallet.wallet
+        ) : new LnBridgeContract(
           config.sourceBridgeAddress,
           fromWallet.wallet,
           config.direction
@@ -212,6 +216,7 @@ export class TesterService implements OnModuleInit {
         const relayerInfo = sortedRelayers[0];
         const baseFee = BigInt(relayerInfo.baseFee);
         const protocolFee = BigInt(relayerInfo.protocolFee);
+        const totalFee = amount * BigInt(relayerInfo.liquidityFeeRate) / BigInt(100000) + baseFee + protocolFee;
 
         const snapshot = bridge.direction === 'default' ? {
             remoteChainId: bridge.toChainId,
@@ -219,7 +224,7 @@ export class TesterService implements OnModuleInit {
             sourceToken: relayerInfo.sendToken,
             targetToken: lnProvider.toAddress,
             transferId: relayerInfo.lastTransferId,
-            totalFee: amount * BigInt(relayerInfo.liquidityFeeRate) / BigInt(100000) + baseFee + protocolFee,
+            totalFee,
             withdrawNonce: relayerInfo.withdrawNonce
         } as DefaultSnapshot : {
             remoteChainId: bridge.toChainId,
@@ -228,7 +233,7 @@ export class TesterService implements OnModuleInit {
             targetToken: lnProvider.toAddress,
             transferId: relayerInfo.lastTransferId,
             depositedMargin: relayerInfo.margin,
-            totalFee: amount * BigInt(relayerInfo.liquidityFeeRate) / BigInt(100000) + baseFee + protocolFee,
+            totalFee,
         } as OppositeSnapshot;
 
 
@@ -247,14 +252,29 @@ export class TesterService implements OnModuleInit {
             return;
         }
         this.logger.log("all request checked, start to send test transaction");
-        await fromBridgeContract.transferAndLockMargin(
-            snapshot,
-            amount,
-            bridge.walletAddress,
-            gasPrice,
-            null,
-            value
-        );
+        if (bridge.direction === 'lnv3') {
+          await (fromBridgeContract as Lnv3BridgeContract).transferAndLockMargin(
+              bridge.toChainId,
+              relayerInfo.relayer,
+              relayerInfo.sendToken,
+              lnProvider.toAddress,
+              totalFee,
+              amount,
+              bridge.walletAddress,
+              gasPrice,
+              null,
+              value
+          );
+        } else {
+          await (fromBridgeContract as LnBridgeContract).transferAndLockMargin(
+              snapshot,
+              amount,
+              bridge.walletAddress,
+              gasPrice,
+              null,
+              value
+          );
+        }
         this.logger.log("send transaction finished");
   }
 }
