@@ -13,9 +13,9 @@
             "chainId": 11155111
         },
         {
-            "name": "taiko",
-            "rpc": "https://rpc.katla.taiko.xyz",
-            "chainId": 167008
+            "name": "taiko-hekla",
+            "rpc": "https://rpc.hekla.taiko.xyz",
+            "chainId": 167009
         },
         {
             "name": "morph",
@@ -141,6 +141,82 @@
         {
             "direction": "arbitrum-sepolia->zksync-sepolia",
             "encryptedPrivateKey": "f2119fa1947b26eac48478c4c80fcc52:8d6ec1766e78d5dc3f1abe6f23c8f6d02ca07f1299d579baf580668dc8f6e0510ed9330e94a84a9a55d655d3c2eb30de9fdcd05d2a8a301a08468c1b6d65d200",
+            "bridgeType": "lnv3",
+            "tokens": [
+                {
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                },
+                {
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                }
+            ]
+        },
+        {
+            "direction": "taiko-hekla->arbitrum-sepolia",
+            "encryptedPrivateKey": "f2119fa1947b26eac48478c4c80fcc52:8d6ec1766e78d5dc3f1abe6f23c8f6d02ca07f1299d579baf580668dc8f6e0510ed9330e94a84a9a55d655d3c2eb30de9fdcd05d2a8a301a08468c1b6d65d200",
+            "bridgeType": "lnv3",
+            "tokens": [
+                {
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                },
+                {
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                }
+            ]
+        },
+        {
+            "direction": "arbitrum-sepolia->taiko-hekla",
+            "encryptedPrivateKey": "f2119fa1947b26eac48478c4c80fcc52:8d6ec1766e78d5dc3f1abe6f23c8f6d02ca07f1299d579baf580668dc8f6e0510ed9330e94a84a9a55d655d3c2eb30de9fdcd05d2a8a301a08468c1b6d65d200",
+            "bridgeType": "lnv3",
+            "tokens": [
+                {
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                },
+                {
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                }
+            ]
+        },
+        {
+            "direction": "taiko-hekla->arbitrum-sepolia",
+            "encryptedPrivateKey": "79927700ae0539ab7ab93abb2214b25a:47931b81a82332058d35df5fe2a9298e5b81b6910af3fcb3d45caafc01e50d8154e9638495b49961b62a98bea21d3ad90723b6f4163c6db2a1a5e6dd6c93fe77",
+            "bridgeType": "lnv3",
+            "tokens": [
+                {
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                },
+                {
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                }
+            ]
+        },
+        {
+            "direction": "arbitrum-sepolia->taiko-hekla",
+            "encryptedPrivateKey": "79927700ae0539ab7ab93abb2214b25a:47931b81a82332058d35df5fe2a9298e5b81b6910af3fcb3d45caafc01e50d8154e9638495b49961b62a98bea21d3ad90723b6f4163c6db2a1a5e6dd6c93fe77",
             "bridgeType": "lnv3",
             "tokens": [
                 {
