@@ -9,16 +9,13 @@ import {
   OppositeSnapshot,
   zeroAddress,
 } from "../base/contract";
-import { Any, EtherBigNumber, Ether, GWei } from "../base/bignumber";
+import { Any, GWei } from "../base/bignumber";
 import {
   EthereumProvider,
-  TransactionInfo,
-  scaleBigger,
 } from "../base/provider";
 import { EthereumConnectedWallet } from "../base/wallet";
 import { ConfigureService } from "../configure/configure.service";
 import { Encrypto } from "../base/encrypto";
-import { last } from "lodash";
 
 export class ChainInfo {
   chainName: string;
@@ -68,10 +65,10 @@ export class TesterService implements OnModuleInit {
   async onModuleInit() {
     this.logger.log("autotest service start");
     this.initConfigure();
-    this.lnBridges.forEach((item, index) => {
-      const fromChainName = item.fromBridge.chainInfo.chainName;
+    this.lnBridges.forEach((targetBridge, index) => {
+      const fromChainName = targetBridge.fromBridge.chainInfo.chainName;
       this.taskService.addScheduleTask(
-        `${fromChainName}-${item.toChain}-lnbridge-autotest`,
+        `${fromChainName}-${targetBridge.toChain}-lnbridge-autotest`,
         this.scheduleInterval,
         async () => {
           const chainInfo = this.chainInfos.get(fromChainName);
@@ -82,16 +79,16 @@ export class TesterService implements OnModuleInit {
             chainInfo.waitingPendingTimes -= 1;
             return;
           }
-          if (item.randomExecTimes > 0) {
-              item.randomExecTimes -= 1;
+          if (targetBridge.randomExecTimes > 0) {
+              targetBridge.randomExecTimes -= 1;
               return;
           }
           chainInfo.waitingPendingTimes = 100;
           chainInfo.isProcessing = true;
-          item.randomExecTimes = Math.floor(Math.random() * 4800);
-          this.logger.log(`[${fromChainName}->${item.toChain}]schedule send tx, next time ${item.randomExecTimes}`);
+          targetBridge.randomExecTimes = Math.floor(Math.random() * 4800);
+          this.logger.log(`[${fromChainName}->${targetBridge.toChain}]schedule send tx, next time ${targetBridge.randomExecTimes}`);
           try {
-            await this.send(item);
+            await this.requestBridge(targetBridge);
           } catch (err) {
             this.logger.warn(`send bridge message failed, err: ${err}`);
           }
@@ -174,7 +171,7 @@ export class TesterService implements OnModuleInit {
       .filter((item) => item !== null);
   }
 
-  async send(bridge: LnBridge) {
+  async requestBridge(bridge: LnBridge) {
     this.logger.log("start to send cross chain tx");
     const fromChainInfo = bridge.fromBridge.chainInfo;
     const fromBridgeContract = bridge.fromBridge.bridge;
@@ -202,6 +199,8 @@ export class TesterService implements OnModuleInit {
             decimals: ${srcDecimals},
         ) {records {baseFee, protocolFee, lastTransferId, liquidityFeeRate, margin, relayer, sendToken, withdrawNonce}}}`;
 
+    console.log(`query`);
+
         const sortedRelayers = await axios
         .post(this.configureService.config.indexer, {
             query,
@@ -211,6 +210,7 @@ export class TesterService implements OnModuleInit {
         .then((res) => res.data.data.sortedLnBridgeRelayInfos.records);
 
         if (!sortedRelayers || sortedRelayers.length === 0) {
+            this.logger.log(`no relayers available on ${bridge.fromBridge.chainInfo.chainName} to ${bridge.toChain}`);
             return;
         }
         const relayerInfo = sortedRelayers[0];
@@ -251,7 +251,7 @@ export class TesterService implements OnModuleInit {
             this.logger.log(`[${fromChainInfo.chainName}]gas price too large ${fromChainInfo.provider.gasPriceValue(gasPrice)}`);
             return;
         }
-        this.logger.log("all request checked, start to send test transaction");
+        this.logger.log("all request parameters checked [OK], start to send test transaction");
         if (bridge.direction === 'lnv3') {
           await (fromBridgeContract as Lnv3BridgeContract).transferAndLockMargin(
               bridge.toChainId,
