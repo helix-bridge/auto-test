@@ -57,7 +57,7 @@ export class TesterService implements OnModuleInit {
   private readonly scheduleInterval = 3000;
   private chainInfos = new Map();
   private lnBridges: LnBridge[];
-  private timer = new Map();
+  private timersMap = new Map();
 
   constructor(
     protected taskService: TasksService,
@@ -69,7 +69,7 @@ export class TesterService implements OnModuleInit {
     this.logger.log("autotest service start");
     this.initConfigure();
     this.lnBridges.forEach((targetBridge, index) => {
-      this.timer.set(index, {
+      this.timersMap.set(index, {
         isProcessing: false
       });
       const fromChainName = targetBridge.fromBridge.chainInfo.chainName;
@@ -78,19 +78,20 @@ export class TesterService implements OnModuleInit {
         this.scheduleInterval,
         async () => {
           const chainInfo = this.chainInfos.get(fromChainName);
-          const timer = this.timer.get(index);
+          const timer = this.timersMap.get(index);
           if (timer.isProcessing) {
             return;
           }
-          if (chainInfo.waitingPendingTimes > 0) {
-            chainInfo.waitingPendingTimes -= 1;
+          if (chainInfo.waitIntervalsCount > 0) {
+            chainInfo.waitIntervalsCount -= 1;
             return;
           }
+          //TODO: this randomExecTimes logic doesn't look right, maybe fix it
           if (targetBridge.randomExecTimes > 0) {
               targetBridge.randomExecTimes -= 1;
               return;
           }
-          chainInfo.waitingPendingTimes = 100;
+          chainInfo.waitIntervalsCount = 100;
           targetBridge.randomExecTimes = Math.floor(Math.random() * 4800);
           this.logger.log(`[${fromChainName}->${targetBridge.toChain}]schedule send tx, next time ${targetBridge.randomExecTimes}`);
           timer.isProcessing = true;
@@ -131,7 +132,7 @@ export class TesterService implements OnModuleInit {
             lnv2OppositeAddress: chainInfo.lnv2OppositeAddress,
             lnv3Address: chainInfo.lnv3Address,
             tokens: chainInfo.tokens,
-            waitingPendingTimes: 0,
+            waitIntervalsCount: 0,
           },
         ];
       })
