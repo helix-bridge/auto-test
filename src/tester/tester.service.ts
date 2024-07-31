@@ -9,16 +9,11 @@ import {
   OppositeSnapshot,
   zeroAddress,
 } from "../base/contract";
-import { Any, EtherBigNumber, Ether, GWei } from "../base/bignumber";
-import {
-  EthereumProvider,
-  TransactionInfo,
-  scaleBigger,
-} from "../base/provider";
+import { Any, GWei } from "../base/bignumber";
+import { EthereumProvider } from "../base/provider";
 import { EthereumConnectedWallet } from "../base/wallet";
 import { ConfigureService } from "../configure/configure.service";
 import { Encrypto } from "../base/encrypto";
-import { last } from "lodash";
 
 export class ChainInfo {
   chainName: string;
@@ -59,7 +54,6 @@ export class LnBridge {
 @Injectable()
 export class TesterService implements OnModuleInit {
   private readonly logger = new Logger("tester");
-  // called one hour
   private readonly scheduleInterval = 3000;
   private chainInfos = new Map();
   private lnBridges: LnBridge[];
@@ -74,13 +68,13 @@ export class TesterService implements OnModuleInit {
   async onModuleInit() {
     this.logger.log("autotest service start");
     this.initConfigure();
-    this.lnBridges.forEach((item, index) => {
+    this.lnBridges.forEach((targetBridge, index) => {
       this.timer.set(index, {
         isProcessing: false
       });
-      const fromChainName = item.fromBridge.chainInfo.chainName;
+      const fromChainName = targetBridge.fromBridge.chainInfo.chainName;
       this.taskService.addScheduleTask(
-        `${fromChainName}-${item.toChain}-lnbridge-autotest`,
+        `${fromChainName}-${targetBridge.toChain}-lnbridge-autotest`,
         this.scheduleInterval,
         async () => {
           const chainInfo = this.chainInfos.get(fromChainName);
@@ -92,18 +86,18 @@ export class TesterService implements OnModuleInit {
             chainInfo.waitingPendingTimes -= 1;
             return;
           }
-          if (item.randomExecTimes > 0) {
-              item.randomExecTimes -= 1;
+          if (targetBridge.randomExecTimes > 0) {
+              targetBridge.randomExecTimes -= 1;
               return;
           }
           chainInfo.waitingPendingTimes = 100;
-          item.randomExecTimes = Math.floor(Math.random() * 4800);
-          this.logger.log(`[${fromChainName}->${item.toChain}]schedule send tx, next time ${item.randomExecTimes}`);
+          targetBridge.randomExecTimes = Math.floor(Math.random() * 4800);
+          this.logger.log(`[${fromChainName}->${targetBridge.toChain}]schedule send tx, next time ${targetBridge.randomExecTimes}`);
           timer.isProcessing = true;
           try {
-            await this.send(item);
+            await this.requestBridge(targetBridge);
           } catch (err) {
-            this.logger.warn(`[${fromChainName}->${item.toChain}]send bridge message failed, err: ${err}`);
+            this.logger.warn(`[${fromChainName}->${targetBridge.toChain}]send bridge message failed, err: ${err}`);
           }
           timer.isProcessing = false;
         }
@@ -245,7 +239,7 @@ export class TesterService implements OnModuleInit {
       .filter((item) => item !== null);
   }
 
-  async send(bridge: LnBridge) {
+  async requestBridge(bridge: LnBridge) {
     this.logger.log("start to send cross chain tx");
     const fromChainInfo = bridge.fromBridge.chainInfo;
     const fromBridgeContract = bridge.fromBridge.bridge;
@@ -257,11 +251,12 @@ export class TesterService implements OnModuleInit {
     if (lnProvider.fromAddress !== zeroAddress) {
         srcDecimals = await lnProvider.fromToken.decimals();
     }
-    let formatedAmount = Number((randomAmount/1000.0).toFixed(Number((Math.random() * 6).toFixed()))) * 1000;
-    if (formatedAmount === 0) {
+    const decimalPlaces = Math.floor(Math.random() * 6);
+    const formattedAmount = Number((randomAmount/1000.0).toFixed(decimalPlaces)) * 1000;
+    if (formattedAmount === 0) {
         return;
     }
-    let amount = new Any(formatedAmount, srcDecimals).Number;
+    let amount = new Any(formattedAmount, srcDecimals).Number;
     let value = BigInt(0);
     if (lnProvider.fromAddress === zeroAddress) {
         value = amount;
@@ -285,6 +280,7 @@ export class TesterService implements OnModuleInit {
         .then((res) => res.data.data.sortedLnBridgeRelayInfos.records);
 
         if (!sortedRelayers || sortedRelayers.length === 0) {
+            this.logger.log(`no relayers available for ${bridge.fromBridge.chainInfo.chainName}->${bridge.toChain}`);
             return;
         }
         const relayerInfo = sortedRelayers[0];
@@ -333,7 +329,7 @@ export class TesterService implements OnModuleInit {
             this.logger.log(`[${fromChainInfo.chainName}]gas price too large ${fromChainInfo.provider.gasPriceValue(gasPrice)}`);
             return;
         }
-        this.logger.log(`[${fromChainInfo.chainName}->${bridge.toChain}]all request checked, start to send test transaction`);
+        this.logger.log(`[${fromChainInfo.chainName}->${bridge.toChain}]all request parameter checked, start to send test transaction`);
         if (bridge.bridgeType === 'lnv3') {
           const tx = await (fromBridgeContract as Lnv3BridgeContract).lockAndRemoteRelease(
               bridge.toChainId,
@@ -347,7 +343,7 @@ export class TesterService implements OnModuleInit {
               null,
               value
           );
-          this.logger.log(`finish to send cross chain tx, hash: ${tx.hash}`);
+          this.logger.log(`Succeeded to send cross chain tx, hash: ${tx.hash}`);
         } else {
           const tx = await (fromBridgeContract as LnBridgeContract).transferAndLockMargin(
               snapshot,
@@ -357,7 +353,7 @@ export class TesterService implements OnModuleInit {
               null,
               value
           );
-          this.logger.log(`finish to send cross chain tx, hash: ${tx.hash}`);
+          this.logger.log(`Succeeded to send cross chain tx, hash: ${tx.hash}`);
         }
         this.logger.log("send transaction finished");
   }
