@@ -68,13 +68,13 @@ export class TesterService implements OnModuleInit {
   async onModuleInit() {
     this.logger.log("autotest service start");
     this.initConfigure();
-    this.lnBridges.forEach((item, index) => {
+    this.lnBridges.forEach((targetBridge, index) => {
       this.timer.set(index, {
         isProcessing: false
       });
-      const fromChainName = item.fromBridge.chainInfo.chainName;
+      const fromChainName = targetBridge.fromBridge.chainInfo.chainName;
       this.taskService.addScheduleTask(
-        `${fromChainName}-${item.toChain}-lnbridge-autotest`,
+        `${fromChainName}-${targetBridge.toChain}-lnbridge-autotest`,
         this.scheduleInterval,
         async () => {
           const chainInfo = this.chainInfos.get(fromChainName);
@@ -86,18 +86,18 @@ export class TesterService implements OnModuleInit {
             chainInfo.waitingPendingTimes -= 1;
             return;
           }
-          if (item.randomExecTimes > 0) {
-              item.randomExecTimes -= 1;
+          if (targetBridge.randomExecTimes > 0) {
+              targetBridge.randomExecTimes -= 1;
               return;
           }
           chainInfo.waitingPendingTimes = 100;
-          item.randomExecTimes = Math.floor(Math.random() * 4800);
-          this.logger.log(`[${fromChainName}->${item.toChain}]schedule send tx, next time ${item.randomExecTimes}`);
+          targetBridge.randomExecTimes = Math.floor(Math.random() * 4800);
+          this.logger.log(`[${fromChainName}->${targetBridge.toChain}]schedule send tx, next time ${targetBridge.randomExecTimes}`);
           timer.isProcessing = true;
           try {
-            await this.send(item);
+            await this.requestBridge(targetBridge);
           } catch (err) {
-            this.logger.warn(`[${fromChainName}->${item.toChain}]send bridge message failed, err: ${err}`);
+            this.logger.warn(`[${fromChainName}->${targetBridge.toChain}]send bridge message failed, err: ${err}`);
           }
           timer.isProcessing = false;
         }
@@ -239,7 +239,7 @@ export class TesterService implements OnModuleInit {
       .filter((item) => item !== null);
   }
 
-  async send(bridge: LnBridge) {
+  async requestBridge(bridge: LnBridge) {
     this.logger.log("start to send cross chain tx");
     const fromChainInfo = bridge.fromBridge.chainInfo;
     const fromBridgeContract = bridge.fromBridge.bridge;
