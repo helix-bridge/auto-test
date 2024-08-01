@@ -86,7 +86,6 @@ export class TesterService implements OnModuleInit {
             chainInfo.waitIntervalsCount -= 1;
             return;
           }
-          //TODO: this randomExecTimes logic doesn't look right, maybe fix it
           if (targetBridge.randomExecTimes > 0) {
               targetBridge.randomExecTimes -= 1;
               return;
