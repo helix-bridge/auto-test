@@ -199,7 +199,7 @@ export class Lnv3BridgeContract extends EthereumContract {
       super(address, lnv3Bridge, signer);
     }
 
-    async transferAndLockMargin(
+    async lockAndRemoteRelease(
         remoteChainId: number,
         provider: string,
         sourceToken: string,
@@ -211,9 +211,9 @@ export class Lnv3BridgeContract extends EthereumContract {
         gasLimit: bigint | null = null,
         value: bigint = BigInt(0)
     ) {
-        const timestamp = Date.now();
+        const timestamp = (Date.now() / 1000).toFixed();
         return await this.call(
-            "transferAndLockMargin",
+            "lockAndRemoteRelease",
             [
                 [
                    remoteChainId,

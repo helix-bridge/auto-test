@@ -1,67 +1,197 @@
 {
-    "indexer": "http://localhost:4002/graphql",
-    "chains": [
+    "indexer": "https://apollo-test.helixbridge.app/graphql",
+    "env": "test",
+    "rpcnodes": [
         {
             "name": "arbitrum-sepolia",
             "rpc": "https://sepolia-rollup.arbitrum.io/rpc",
-            "chainId": 421614,
-            "native": "ETH"
+            "chainId": 421614
         },
         {
             "name": "sepolia",
             "rpc": "https://1rpc.io/sepolia",
-            "chainId": 11155111,
-            "native": "ETH"
+            "chainId": 11155111
+        },
+        {
+            "name": "taiko-hekla",
+            "rpc": "https://rpc.hekla.taiko.xyz",
+            "chainId": 167009
+        },
+        {
+            "name": "morph",
+            "rpc": "https://rpc-testnet.morphl2.io",
+            "chainId": 2710,
+            "fixedGasPrice": 0.1
+        },
+        {
+            "name": "zksync-sepolia",
+            "rpc": "https://sepolia.era.zksync.dev",
+            "chainId": 300,
+            "fixedGasPrice": 0.1
         }
     ],
     "bridges": [
         {
-            "fromChain": "arbitrum-sepolia",
-            "toChain": "sepolia",
-            "sourceBridgeAddress": "0xbA96d83E2A04c4E50F2D6D7eCA03D70bA2426e5f",
-            "targetBridgeAddress": "0xbA96d83E2A04c4E50F2D6D7eCA03D70bA2426e5f",
-            "encryptedPrivateKey": "555ba198fac794f4a70332718c7cf536:64ee46e41cfe8277808873614eeb6dc31b0f0c274ad9d4ef53d44485c08b9419a765a417f203b7e9a685c020525cac1f5025b9f817b6ec653895449b99b37bce",
-            "direction": "opposite",
-            "providers": [
+            "direction": "arbitrum-sepolia->sepolia",
+            "encryptedPrivateKey": "79927700ae0539ab7ab93abb2214b25a:47931b81a82332058d35df5fe2a9298e5b81b6910af3fcb3d45caafc01e50d8154e9638495b49961b62a98bea21d3ad90723b6f4163c6db2a1a5e6dd6c93fe77",
+            "bridgeType": "lnv2-opposite",
+            "tokens": [
                 {
-                    "fromAddress": "0x3b8Bb7348D4F581e67E2498574F73e4B9Fc51855",
-                    "toAddress": "0x876A4f6eCF13EEb101F9E75FCeF58f19Ff383eEB",
-                    "feeLimit": 200
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
                 },
                 {
-                    "fromAddress": "0x8A87497488073307E1a17e8A12475a94Afcb413f",
-                    "toAddress": "0x0ac58Df0cc3542beC4cDa71B16D06C3cCc39f405",
-                    "feeLimit": 200
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
                 },
                 {
-                    "fromAddress": "0x0000000000000000000000000000000000000000",
-                    "toAddress": "0x0000000000000000000000000000000000000000",
-                    "feeLimit": 0.01
+                    "symbol": "eth->eth",
+                    "feeLimit": 0.01,
+                    "minAmount": 0.00001,
+                    "maxAmount": 0.0001
                 }
             ]
         },
         {
-            "fromChain": "sepolia",
-            "toChain": "arbitrum-sepolia",
-            "sourceBridgeAddress": "0xbA96d83E2A04c4E50F2D6D7eCA03D70bA2426e5f",
-            "targetBridgeAddress": "0xbA96d83E2A04c4E50F2D6D7eCA03D70bA2426e5f",
-            "encryptedPrivateKey": "ba6aea37523572233243b5b1d7edad0f:1f62e357fd1aa77108dd7ed0be35988d968b59bd4797b0cac99346e858e343926e15a89dede4ceb10d067b4b74b2e8c36545adf06cebb043c168642832ce4a4d",
-            "direction": "opposite",
-            "providers": [
+            "direction": "sepolia->arbitrum-sepolia",
+            "encryptedPrivateKey": "dd4f15431b7f7b5e340729ddd9bbde50:37faa57fcef2b28633965d09fd7c0b129f24c6d5b6b167dbc504a1220cffac308381b30d3437b6a9d8e48087d314dad4c99b8b51d5c546258619bfbe34dfa0f1",
+            "bridgeType": "lnv2-opposite",
+            "tokens": [
                 {
-                    "fromAddress": "0x876A4f6eCF13EEb101F9E75FCeF58f19Ff383eEB",
-                    "toAddress": "0x3b8Bb7348D4F581e67E2498574F73e4B9Fc51855",
-                    "feeLimit": 200
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
                 },
                 {
-                    "fromAddress": "0x0ac58Df0cc3542beC4cDa71B16D06C3cCc39f405",
-                    "toAddress": "0x8A87497488073307E1a17e8A12475a94Afcb413f",
-                    "feeLimit": 200
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
                 },
                 {
-                    "fromAddress": "0x0000000000000000000000000000000000000000",
-                    "toAddress": "0x0000000000000000000000000000000000000000",
-                    "feeLimit": 0.01
+                    "symbol": "eth->eth",
+                    "feeLimit": 0.01,
+                    "minAmount": 0.00001,
+                    "maxAmount": 0.0001
+                }
+            ]
+        },
+        {
+            "direction": "morph->arbitrum-sepolia",
+            "encryptedPrivateKey": "f2119fa1947b26eac48478c4c80fcc52:8d6ec1766e78d5dc3f1abe6f23c8f6d02ca07f1299d579baf580668dc8f6e0510ed9330e94a84a9a55d655d3c2eb30de9fdcd05d2a8a301a08468c1b6d65d200",
+            "bridgeType": "lnv3",
+            "tokens": [
+                {
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                },
+                {
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                }
+            ]
+        },
+        {
+            "direction": "arbitrum-sepolia->morph",
+            "encryptedPrivateKey": "f2119fa1947b26eac48478c4c80fcc52:8d6ec1766e78d5dc3f1abe6f23c8f6d02ca07f1299d579baf580668dc8f6e0510ed9330e94a84a9a55d655d3c2eb30de9fdcd05d2a8a301a08468c1b6d65d200",
+            "bridgeType": "lnv3",
+            "tokens": [
+                {
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                },
+                {
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                }
+            ]
+        },
+        {
+            "direction": "zksync-sepolia->arbitrum-sepolia",
+            "encryptedPrivateKey": "f2119fa1947b26eac48478c4c80fcc52:8d6ec1766e78d5dc3f1abe6f23c8f6d02ca07f1299d579baf580668dc8f6e0510ed9330e94a84a9a55d655d3c2eb30de9fdcd05d2a8a301a08468c1b6d65d200",
+            "bridgeType": "lnv3",
+            "tokens": [
+                {
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                },
+                {
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                }
+            ]
+        },
+        {
+            "direction": "arbitrum-sepolia->zksync-sepolia",
+            "encryptedPrivateKey": "f2119fa1947b26eac48478c4c80fcc52:8d6ec1766e78d5dc3f1abe6f23c8f6d02ca07f1299d579baf580668dc8f6e0510ed9330e94a84a9a55d655d3c2eb30de9fdcd05d2a8a301a08468c1b6d65d200",
+            "bridgeType": "lnv3",
+            "tokens": [
+                {
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                },
+                {
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                }
+            ]
+        },
+        {
+            "direction": "taiko-hekla->arbitrum-sepolia",
+            "encryptedPrivateKey": "79927700ae0539ab7ab93abb2214b25a:47931b81a82332058d35df5fe2a9298e5b81b6910af3fcb3d45caafc01e50d8154e9638495b49961b62a98bea21d3ad90723b6f4163c6db2a1a5e6dd6c93fe77",
+            "bridgeType": "lnv3",
+            "tokens": [
+                {
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                },
+                {
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                }
+            ]
+        },
+        {
+            "direction": "arbitrum-sepolia->taiko-hekla",
+            "encryptedPrivateKey": "79927700ae0539ab7ab93abb2214b25a:47931b81a82332058d35df5fe2a9298e5b81b6910af3fcb3d45caafc01e50d8154e9638495b49961b62a98bea21d3ad90723b6f4163c6db2a1a5e6dd6c93fe77",
+            "bridgeType": "lnv3",
+            "tokens": [
+                {
+                    "symbol": "usdt->usdt",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
+                },
+                {
+                    "symbol": "usdc->usdc",
+                    "feeLimit": 200,
+                    "minAmount": 1,
+                    "maxAmount": 5000
                 }
             ]
         }
