@@ -498,6 +498,24 @@ export class BaseConfigService {
           }
         ],
       }
+      {
+        name: "zircuit",
+        id: 48899,
+        lnv2DefaultAddress: undefined,
+        lnv2OppositeAddress: undefined,
+        lnv3Address: "0x369642b7b9cf4eAc16b07797F77e1C0907Ea62c1",
+        messagers: [],
+        tokens: [
+          {
+            "symbol": "usdt",
+            "address": "0x9C80EdD342b5D179c3a87946fC1F0963BfcaAa09"
+          },
+          {
+            "symbol": "usdc",
+            "address": "0x8A87497488073307E1a17e8A12475a94Afcb413f"
+          }
+        ],
+       }
     ],
   };
 
