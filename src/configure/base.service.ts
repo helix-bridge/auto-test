@@ -497,7 +497,7 @@ export class BaseConfigService {
             "address": "0x89AF830781A2C1d3580Db930bea11094F55AfEae"
           }
         ],
-      }
+      },
       {
         name: "zircuit",
         id: 48899,
