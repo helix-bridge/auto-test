@@ -211,6 +211,7 @@ export class TesterService implements OnModuleInit {
         .then((res) => res.data.data.sortedLnBridgeRelayInfos.records);
 
         if (!sortedRelayers || sortedRelayers.length === 0) {
+            this.logger.warn(`[${fromChainInfo.chainName}->${bridge.toChain}] no relayer avaiable, token: ${lnProvider.fromAddress}`);
             return;
         }
         const relayerInfo = sortedRelayers[0];
