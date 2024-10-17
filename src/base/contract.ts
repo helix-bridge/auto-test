@@ -232,5 +232,36 @@ export class Lnv3BridgeContract extends EthereumContract {
             gasLimit
         )
     }
+
+    async tryLockAndRemoteRelease(
+        remoteChainId: number,
+        provider: string,
+        sourceToken: string,
+        targetToken: string,
+        totalFee: bigint,
+        amount: bigint,
+        receiver: string,
+        gasLimit: bigint | null = null,
+        value: bigint = BigInt(0)
+    ) {
+        const timestamp = (Date.now() / 1000).toFixed();
+        return await this.staticCall(
+            "lockAndRemoteRelease",
+            [
+                [
+                   remoteChainId,
+                   provider,
+                   sourceToken,
+                   targetToken,
+                   totalFee,
+                   amount,
+                   receiver,
+                   timestamp
+                ],
+            ],
+            value,
+            gasLimit
+        )
+    }
 }
 

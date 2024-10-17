@@ -333,7 +333,7 @@ export class TesterService implements OnModuleInit {
         }
         this.logger.log(`[${fromChainInfo.chainName}->${bridge.toChain}]all request parameter checked, start to send test transaction`);
         if (bridge.bridgeType === 'lnv3') {
-          const tx = await (fromBridgeContract as Lnv3BridgeContract).lockAndRemoteRelease(
+          const err = await (fromBridgeContract as Lnv3BridgeContract).tryLockAndRemoteRelease(
               bridge.toChainId,
               relayerInfo.relayer,
               relayerInfo.sendToken,
@@ -341,11 +341,26 @@ export class TesterService implements OnModuleInit {
               totalFee,
               amount,
               bridge.walletAddress,
-              gasPrice,
               null,
               value
           );
-          this.logger.log(`Succeeded to send cross chain tx, hash: ${tx.hash}`);
+          if (err === null) {
+            const tx = await (fromBridgeContract as Lnv3BridgeContract).lockAndRemoteRelease(
+                bridge.toChainId,
+                relayerInfo.relayer,
+                relayerInfo.sendToken,
+                lnProvider.toAddress,
+                totalFee,
+                amount,
+                bridge.walletAddress,
+                gasPrice,
+                null,
+                value
+            );
+            this.logger.log(`[${fromChainInfo.chainName}->${bridge.toChain}] Succeeded to send cross chain tx, hash: ${tx.hash}`);
+          } else {
+            this.logger.warn(`[${fromChainInfo.chainName}->${bridge.toChain}] Try send tx failed: err ${err}`);
+          }
         } else {
           const tx = await (fromBridgeContract as LnBridgeContract).transferAndLockMargin(
               snapshot,
