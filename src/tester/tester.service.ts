@@ -18,6 +18,7 @@ import { Encrypto } from "../base/encrypto";
 export class ChainInfo {
   chainName: string;
   rpc: string;
+  maxGasPrice: number;
   chainId: number;
   provider: EthereumProvider;
   fixedGasPrice: number;
@@ -123,6 +124,7 @@ export class TesterService implements OnModuleInit {
           {
             chainName: config.name,
             rpc: config.rpc,
+            maxGasPrice: config.maxGasPrice,
             chainId: config.chainId,
             provider: new EthereumProvider(config.rpc),
             fixedGasPrice: config.fixedGasPrice,
@@ -325,7 +327,7 @@ export class TesterService implements OnModuleInit {
                 eip1559fee: null,
             }
             : await fromChainInfo.provider.feeData(1);
-        if (fromChainInfo.provider.gasPriceCompare(gasPrice, new GWei(100))) {
+        if (fromChainInfo.provider.gasPriceCompare(gasPrice, new GWei(fromChainInfo.maxGasPrice))) {
             this.logger.log(`[${fromChainInfo.chainName}]gas price too large ${fromChainInfo.provider.gasPriceValue(gasPrice)}`);
             return;
         }

@@ -7,6 +7,7 @@ import * as fs from "fs";
 export interface RpcNode {
   name: string;
   rpc: string;
+  maxGasPrice: number;
   chainId: number;
   fixedGasPrice: number;
   notSupport1559: boolean;
