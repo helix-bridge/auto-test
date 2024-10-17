@@ -49,17 +49,30 @@ export class EthereumContract {
   async staticCall(
     method: string,
     args: any,
+    hasReturnValue: boolean = false,
     value: bigint | null = null,
-    gasLimit: bigint | null = null
+    gasLimit: bigint | null = null,
+    from: string | null = null
   ): Promise<string> | null {
     try {
+      var options = {};
       if (value != null) {
-        args = [...args, { value: value }];
+        options = { value: value };
       }
-      await this.contract.callStatic[method](...args);
-      return null;
+      if (from != null) {
+        options[from] = from;
+      }
+      if (value != null) {
+        args = [...args, options];
+      }
+      const result = await this.contract[method].staticCall(...args);
+      if (hasReturnValue) {
+        return result;
+      } else {
+        return null;
+      }
     } catch (error) {
-      return error.message;
+      return error;
     }
   }
 }
@@ -259,6 +272,7 @@ export class Lnv3BridgeContract extends EthereumContract {
                    timestamp
                 ],
             ],
+            false,
             value,
             gasLimit
         )
