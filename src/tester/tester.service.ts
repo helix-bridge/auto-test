@@ -189,27 +189,27 @@ export class TesterService implements OnModuleInit {
               return null;
             }
             const fromToken = fromChainInfo.tokens.find(
-              (item) => item.symbol === symbols[0]
+              (item) => item.symbol.toLowerCase() === symbols[0]
             );
             if (!fromToken) {
               this.logger.error(
                 `[${fromChainInfo.chainName}]token not support ${
                   symbols[0]
                 }, only support ${fromChainInfo.tokens.map(
-                  (item) => item.symbol
+                  (item) => item.symbol.toLowerCase()
                 )}`
               );
               return null;
             }
             const toToken = toChainInfo.tokens.find(
-              (item) => item.symbol === symbols[1]
+              (item) => item.symbol.toLowerCase() === symbols[1]
             );
             if (!toToken) {
               this.logger.error(
                 `[${toChainInfo.chainName}]token not support ${
                   symbols[1]
                 }, only support ${toChainInfo.tokens.map(
-                  (item) => item.symbol
+                  (item) => item.symbol.toLowerCase()
                 )}`
               );
               return null;
