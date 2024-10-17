@@ -56,7 +56,7 @@ export class ConfigureService {
   }
 
   public getChainInfo(name: string): HelixChainConf | null {
-    return this.baseConfig.chains.find((chain) => chain.name === name);
+    return this.baseConfig.chains.find((chain) => chain.code === name);
   }
 
   public getMessagerAddress(
@@ -74,7 +74,7 @@ export class ConfigureService {
   }
 
   get supportedChains(): string[] {
-    return this.baseConfig.chains.map((item) => item.name);
+    return this.baseConfig.chains.map((item) => item.code);
   }
 }
 
