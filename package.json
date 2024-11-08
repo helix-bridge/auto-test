@@ -29,7 +29,7 @@
     "@ethersproject/abstract-provider": "^5.7.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
-    "@helixbridge/helixconf": "1.1.17",
+    "@helixbridge/helixconf": "1.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/schedule": "^1.1.0",
