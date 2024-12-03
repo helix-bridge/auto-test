@@ -357,9 +357,9 @@ export class TesterService implements OnModuleInit {
                 null,
                 value
             );
-            this.logger.log(`[${fromChainInfo.chainName}->${bridge.toChain}] Succeeded to send cross chain tx, hash: ${tx.hash}`);
+            this.logger.log(`[${fromChainInfo.chainName}->${bridge.toChain}] Succeeded to send cross chain tx, sender: ${bridge.walletAddress} hash: ${tx.hash}`);
           } else {
-            this.logger.warn(`[${fromChainInfo.chainName}->${bridge.toChain}] Try send tx failed: err ${err}`);
+            this.logger.warn(`[${fromChainInfo.chainName}->${bridge.toChain}] Try send tx failed: sender: ${bridge.walletAddress} err ${err}`);
           }
         } else {
           const tx = await (fromBridgeContract as LnBridgeContract).transferAndLockMargin(
