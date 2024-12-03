@@ -259,7 +259,7 @@ export class TesterService implements OnModuleInit {
     const decimalPlaces = Math.floor(Math.random() * 6);
     const formattedAmount = Number((randomAmount/1000.0).toFixed(decimalPlaces)) * 1000;
     if (formattedAmount === 0) {
-        this.logger.log(`[${fromChainInfo.chainName}->${bridge.toChain}] amount invalid`);
+        this.logger.log(`[${fromChainInfo.chainName}->${bridge.toChain}] amount invalid, decimalPlaces ${decimalPlaces}, randomAmount ${randomAmount}`);
         return;
     }
     let amount = new Any(formattedAmount, srcDecimals).Number;
