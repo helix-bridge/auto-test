@@ -92,7 +92,8 @@ export class TesterService implements OnModuleInit {
               return;
           }
           chainInfo.waitIntervalsCount = 100;
-          targetBridge.randomExecTimes = Math.floor(Math.random() * 4800);
+          //targetBridge.randomExecTimes = Math.floor(Math.random() * 4800);
+          targetBridge.randomExecTimes = 2000 + Math.floor(Math.random() * 4800 * 5);
           this.logger.log(`[${fromChainName}->${targetBridge.toChain}]schedule send tx, next time ${targetBridge.randomExecTimes}`);
           timer.isProcessing = true;
           try {
@@ -250,15 +251,22 @@ export class TesterService implements OnModuleInit {
     const lnProvider = bridge.lnProviders[randomIndex];
     const randomAmount = Math.random() * (lnProvider.maxAmount - lnProvider.minAmount) + lnProvider.minAmount;
     let srcDecimals = 18;
+    let testerBalance = BigInt(1);
     if (lnProvider.fromAddress !== zeroAddress) {
         srcDecimals = await lnProvider.fromToken.decimals();
+        testerBalance = await lnProvider.fromToken.balanceOf(bridge.walletAddress);
     }
     const decimalPlaces = Math.floor(Math.random() * 6);
     const formattedAmount = Number((randomAmount/1000.0).toFixed(decimalPlaces)) * 1000;
     if (formattedAmount === 0) {
+        this.logger.log(`[${fromChainInfo.chainName}->${bridge.toChain}] amount invalid`);
         return;
     }
     let amount = new Any(formattedAmount, srcDecimals).Number;
+    if (testerBalance <= amount && lnProvider.fromAddress !== zeroAddress) {
+        this.logger.log(`[${fromChainInfo.chainName}->${bridge.toChain}] balance not enough, ${testerBalance} < ${amount}, tester: ${bridge.walletAddress}`);
+        return;
+    }
     let value = BigInt(0);
     if (lnProvider.fromAddress === zeroAddress) {
         value = amount;
